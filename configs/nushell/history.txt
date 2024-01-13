@@ -1,0 +1,210 @@
+ls 
+ls
+clear
+ls -la
+cd nixos-dots/
+clear
+ls -la
+cd ..
+cd .config/
+clear
+ls -la
+cd nushell/
+clear
+ls -la
+nvim config.nu
+cd ../
+clear
+ls -la
+cd nvim/
+clear
+ls -a
+nvim
+cd ../nushell/
+ls -la
+nvim config.nu
+nvim ../nvim/lua/plugins/lsp.lua
+nvim config.nu
+clear
+nvim config.nu
+exit
+clear
+ls -la
+clear
+cd nixos-dots/
+clear
+nvim
+nvim ../.config/nvim/lua/options.lua
+clear
+ls -la
+nvim flake.nix
+sudo nixos-rebuild switch --flake .
+clear
+zellij
+cd ..
+cd .config/
+ls -la
+mkdir ~/.config/zellij<\n>zellij setup --dump-config > ~/.config/zellij/config.kdl<\n>
+mkdir ~/.config/zellij<\n>zellij setup --dump-config | save ~/.config/zellij/config.kdl<\n>
+ls -la
+cd zellij/
+ls -la
+nvim config.kdl
+cd ../
+cd nvim
+clear
+nvim
+cd ..
+clear
+cd ..
+cd nixos-dots/
+nvim flake.nix
+cd ..
+cd .config/
+ls -la
+cd zellij/
+ls -la
+nvim config.kdl
+exit
+exit
+zellij
+clear
+cd ../.config/zellij/
+nvim
+exit
+cd ../.config/zellij/
+nvim
+exit
+zellij
+cd ../.config/zellij/
+clear
+echo Hello world
+clear
+exit
+nvim
+exit
+clear
+cd .config/zellij/
+ls -la
+nvim config.kdl
+clear
+exit
+nvim
+exit
+exit
+exit
+exit
+zellij
+ls -la
+clear
+cd nixos-dots/
+cat flake.nix
+EDITOR="nvim"
+let-env EDITOR = "nvim"
+$env.EDITOR = "nvim"
+exit
+echo $EDITOR
+echo $env
+echo $env.EDITOR
+$env.EDITOR = "nvim"
+echo $env.EDITOR
+cd nixos-dots/
+ls -la
+echo "Woot"
+cat configuration.nix
+echo "Nice"
+clear
+cd ../.config/nvim/
+clear
+ls -la
+nvim
+clear
+ls -la
+cd ..
+clera
+clear
+cd nushell/
+clear
+nvim
+cd ..
+cd zellij/
+nvim
+clear
+exit
+zellij
+exit
+ifconfig
+clear
+neofetch
+ls
+cd nixos-dots/
+clear
+ls
+nvim
+cd ../
+clear
+ls -la
+cd .config/
+cd nvim
+nvim
+cd
+clear
+cd nixos-dots/
+ls
+ls /etc/NIXOS
+exit
+nvim
+cd ..
+cd .config/nvim/
+ls -la
+nvim
+exit
+brew
+cd .config/nvim/
+nvim
+which nvim
+aliases
+help aliases
+cd ..
+echo "/etc/NIXOS" | path exists
+exit
+nvim
+nvim ./nvim/init.lua
+help aliases
+which nvim
+_nvim
+exit
+nu
+clear
+nvim
+exit
+nu
+nvim
+ls
+cd ..
+cd nixos-dots/
+nvim
+ls
+mkdir configs
+cd configs/
+cp ~/.config/nushell/ .
+bash
+ls -la ~/.config/
+exit
+ls -la
+ls
+cd nixos-dots/
+ls
+nvim
+exit
+ls
+cd nixos-dots/
+ls
+nvim
+sudo nixos-rebuild switch --flake .
+Hyprland 
+ps
+ps | where name ~= "hyprland"
+ps | where name =~ "hyprland"
+ps | where name =~ "im"
+poweroff
