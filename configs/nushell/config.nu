@@ -210,6 +210,6 @@ let nixld = (if (echo "/etc/NIXOS" | path exists) {
     ""
 })
 
-def nvim [] {
-    NIX_LD=$nixld _nvim
+def nvim [...$args] {
+    NIX_LD=$nixld _nvim $args
 }

@@ -22,19 +22,50 @@
   };
 
   outputs = { self, nixpkgs, hyprland }: {
-    nixosConfigurations = let lib = nixpkgs.lib; in {
-      virt = lib.nixosSystem rec {
-        system = "aarch64-linux";
+    nixosConfigurations = let
+      lib = nixpkgs.lib;
+      nixSystemSetup = name: arch: nixpkgs.lib.nixosSystem rec{
+        system = arch;
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
         modules = [
+          ({ ... }: {
+            networking.hostName = name;
+          })
           hyprland.nixosModules.default
           ./configuration.nix
-          ./hardware-confs/virt.nix
+          ./hardware-confs/${name}.nix
         ];
       };
+    in {
+      virt = nixSystemSetup "virt" "aarch64-linux";
+      virt2 = nixSystemSetup "virt2" "x86_64-linux";
+      # virt = lib.nixosSystem rec {
+      #   system = "aarch64-linux";
+      #   pkgs = import nixpkgs {
+      #     inherit system;
+      #     config.allowUnfree = true;
+      #   };
+      #   modules = [
+      #     hyprland.nixosModules.default
+      #     ./configuration.nix
+      #     ./hardware-confs/virt.nix
+      #   ];
+      # };
+      # virt2 = lib.nixosSystem rec {
+      #   system = "x86_64-linux";
+      #   pkgs = import nixpkgs {
+      #     inherit system;
+      #     config.allowUnfree = true;
+      #   };
+      #   modules = [
+      #     hyprland.nixosModules.default
+      #     ./configuration.nix
+      #     ./hardware-confs/virt2.nix
+      #   ];
+      # };
     };
   };
 }

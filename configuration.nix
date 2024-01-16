@@ -16,7 +16,7 @@ let user = "bryley"; in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  networking.hostName = "virt"; # Define your hostname.
+  # networking.hostName = "virt"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -39,8 +39,6 @@ let user = "bryley"; in {
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -70,29 +68,47 @@ let user = "bryley"; in {
   # Config files
   system.activationScripts.symlinks = let
     dots = "/home/${user}/nixos-dots/configs";
-    config = "/home/${user}/.config";
+    homeDir = "/home/${user}";
+    config = "${homeDir}/.config";
   in {
     text = ''
-      mkdir -p ${config}
+      if [ -d "${homeDir}" ]; then
+        mkdir -p ${config}
 
-      ln -sfn ${dots}/nushell ${config}/nushell
-      ln -sfn ${dots}/nvim ${config}/nvim
-      ln -sfn ${dots}/zellij ${config}/zellij
+        rm -r ${config}/nushell
+        ln -sfn ${dots}/nushell ${config}/nushell
+        ln -sfn ${dots}/nvim ${config}/nvim
+        ln -sfn ${dots}/zellij ${config}/zellij
+        ln -sfn ${dots}/hypr ${config}/hypr
+      fi
     '';
   };
 
   # Global Packages
   environment.systemPackages = with pkgs; [
-    git
-    gcc
-    unzip
+    gcc       # C Compiler (used by lots of software)
+    unzip     # unzipping software
     nodejs_21 # For npm
-    rustup
-    neovim
+    rustup    # Everything for Rust (cargo, rustc)
+    neovim    # IDE
 
-    nushell
-    zellij
+    nushell   # Modern shell
+    zellij    # Modern Terminal Multiplexer
+    kitty     # Terminal Emulator
   ];
+
+  programs.git = {
+    enable = true;
+    config = {
+      init = {
+        defaultBranch = "main";
+      };
+      user = {
+        email = "bryleyhayter@gmail.com";
+        name = "Bryley Hayter";
+      };
+    };
+  };
 
   programs.hyprland.enable = true;
 
@@ -118,6 +134,5 @@ let user = "bryley"; in {
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }
 

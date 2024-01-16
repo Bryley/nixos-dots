@@ -208,3 +208,121 @@ ps | where name ~= "hyprland"
 ps | where name =~ "hyprland"
 ps | where name =~ "im"
 poweroff
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+ls ../.config/
+cd ../.config/
+ls
+cd nushell/
+cd ../..
+clear
+exit
+ifconfig
+clear
+ls
+ls -la
+ls
+clear
+cd nixos-dots/
+ls
+clear
+ls
+exit
+cd nixos-dots/
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim flake.nix
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+nvim
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+hostname
+ls
+nvim configuration.nix
+cd configs/
+nvim
+exit
+ls
+hostname
+cd nixos-dots/
+nvim configuration.nix
+git status
+exit
+hostname
+Hyprland
+Hyprland 
+cd .config/
+ls
+cd hypr/
+ls
+nvim hyprland.conf
+clear
+ps
+ps | where name =~ "hypr"
+hyprctl 
+hyprctl kill
+clear
+cd nixos-dots/
+ls
+cd ..
+cd .config/
+ls
+cd hypr/
+ls
+cd ..
+mv -r hypr/ ~/nixos-dots/configs/
+mv hypr/ ~/nixos-dots/configs/
+cd ..
+clear
+ls
+cd nixos-dots/
+ls
+cd configs/
+ls
+cd hy
+cd hypr/
+ls
+mv hyprland.conf old.hyprland.conf
+ls
+nvim hyprland.conf
+ls
+nvim hyprland.conf
+ls
+cd ..
+ls
+cd ..
+ls
+nvim configuration.nix
+git add . ; sudo nixos-rebuild switch --flake .#virt2
+Hyprland 
+clear
+ls
+cd configs/
+ls
+cd hypr/
+ls
+clear
+ls
+clear
+exit
+Hyprland 
+exit
+exxi
+exit
+ls
+exit
+nvim hyprland.conf
+cd ..
+ls
+nvim README.md
