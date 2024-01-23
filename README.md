@@ -66,3 +66,10 @@ Finally move the folder to a better location and change the perms:
 mv /nixos-dots ~
 chown -R bryley:users ~/nixos-dots
 ```
+
+Note there are probably some other small things you might want to setup, for
+example setting up a rust toolchain to get cargo and more:
+
+```bash
+rustup default stable
+```

@@ -2,13 +2,9 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 let user = "bryley"; in {
-  imports =
-    [ # Include the results of the hardware scan.
-      # ./hardware-configuration.nix
-    ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -16,17 +12,11 @@ let user = "bryley"; in {
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # networking.hostName = "virt"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  # Networking
+  networking.networkmanager.enable = true;
 
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  time.timeZone = "Australia/Brisbane";
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -35,14 +25,6 @@ let user = "bryley"; in {
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;
-
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
@@ -56,8 +38,7 @@ let user = "bryley"; in {
 
   programs.nix-ld.enable = true;
 
-
-  # User level stuff
+  # Add User
   users.users.${user} = {
     isNormalUser = true;
     description = "Bryley Hayter";
@@ -80,6 +61,8 @@ let user = "bryley"; in {
         ln -sfn ${dots}/nvim ${config}/nvim
         ln -sfn ${dots}/zellij ${config}/zellij
         ln -sfn ${dots}/hypr ${config}/hypr
+        ln -sfn ${dots}/kitty ${config}/kitty
+        ln -sfn ${dots}/eww ${config}/eww
       fi
     '';
   };
@@ -88,13 +71,28 @@ let user = "bryley"; in {
   environment.systemPackages = with pkgs; [
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
+    wget      # curl alternative
     nodejs_21 # For npm
     rustup    # Everything for Rust (cargo, rustc)
     neovim    # IDE
+    ripgrep   # Super fast searching in files
+    fd        # Better `find` command
 
     nushell   # Modern shell
     zellij    # Modern Terminal Multiplexer
     kitty     # Terminal Emulator
+    eww-wayland # EIKowars Wacky Widgets
+
+    wl-clipboard # Clipboard manager for Wayland
+    lxqt.lxqt-policykit # Polkit Authentication Agent
+
+    firefox   # Web Browser
+
+  ];
+
+  # Fonts
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
 
   programs.git = {
@@ -103,16 +101,17 @@ let user = "bryley"; in {
       init = {
         defaultBranch = "main";
       };
-      user = {
+      user = {  
         email = "bryleyhayter@gmail.com";
         name = "Bryley Hayter";
       };
     };
   };
 
-  programs.hyprland.enable = true;
-
-  # List services that you want to enable:
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

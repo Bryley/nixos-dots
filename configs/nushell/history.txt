@@ -326,3 +326,302 @@ nvim hyprland.conf
 cd ..
 ls
 nvim README.md
+ping 1.1.1.1
+nmtui
+ls
+cd nixos-dots/
+ls
+vim
+nano
+ls
+nano flake.nix
+ls
+nano configuration.nix
+wpa_cli
+ping 1.1.1.1
+cd nixos-dots/
+git add . ; sudo nixos-rebuild switch --flake .#laptop
+nmtui
+ping 1.1.1.1
+clear
+ls
+ifconfig
+ls
+ps
+ps | where name =~ "nvim"
+pkill nvim
+nvim
+ls
+nvim
+cd nixos-dots/
+ls
+cd configs/
+ls
+cd hypr/
+ls
+nvim hyprland.conf
+cd
+clear
+clear
+exit
+Hyprland 
+cd nixos-dots/
+ls
+nvim flake.nix
+exit
+ls
+cd nixos-dots/
+ls
+nvim configuration.nix
+hostname
+git add . ; sudo nixos-rebuild switch --flake .
+ls
+brave
+exit
+Hyprland 
+cd configs/hypr/
+ls
+nvim hyprland.conf
+clear
+cd
+exit
+brave
+ls
+cd nixos-dots/
+nvim configuration.nix
+git add . ; sudo nixos-rebuild switch --flake .
+ping 1.1.1.1
+speedtest
+git add . ; sudo nixos-rebuild switch --flake .
+cd configs/
+cd hypr/
+ls
+nvim hyprland.conf
+exit
+Hyprland 
+acpi
+upower
+ls /sys/class/power_supply/BAT1/
+cat /sys/class/power_supply/BAT1/capacity
+exit
+hyprctl monitors
+cd nixos-dots/
+ls
+cd configs/
+ls
+cd hypr/
+nvim hyprland.conf
+exit
+exit
+ls
+exit
+Hyprland 
+ls
+cd nixos-dots/
+ls
+nvim flake.nix
+cd ..
+cd .config/
+ls
+ls -la
+fd
+cd ..
+clear
+ping 1.1.1.1
+clear
+cd nixos-dots/
+ls
+nvim
+git add . ; sudo nixos-rebuild switch --flake .
+nvim
+git add . ; sudo nixos-rebuild switch --flake .
+exit
+ping 1.1.1.1
+exit
+Hyprland 
+ls
+cd nixos-dots/
+ls
+cd configs/
+ls
+sudo find /etc -name kitty.conf
+sudo find / -name kitty.conf
+mkdir kitty
+cd kitty/
+ls
+cp /nix/store/9ln9ni1yy77shj6bjx1d5xkc72f83rcx-kitty-0.31.0/share/doc/kitty/html/_downloads/433dadebd0bf504f8b008985378086ce/kitty.conf .
+ls
+clear
+cd
+cd nixos-dots/configs/kitty/
+ls
+nvim kitty.conf
+cd ..
+ls
+cd ..
+rustup --help
+rustup default --help
+exit
+nvim flake.nix
+rustup default stable
+cargo --help
+nvim
+clear
+ls
+clear
+git add . ; sudo nixos-rebuild switch --flake .
+nvim flake.nix
+clear
+ls
+clear
+cd nixos-dots/
+ls
+cd ..
+cd .config/
+ls
+cd kitty/
+ls
+nvim kitty.conf
+fc-cache
+fc-list 
+fc-list | rg Hack
+fc-list | rg nerd
+fc-list | rg Nerd
+clear
+exit
+ls
+nvim configuration.nix
+clear
+git add . ; sudo nixos-rebuild switch --flake .
+cd nixos-dots/
+ls
+clear
+ls
+clear
+exit
+nvim
+git add . ; sudo nixos-rebuild switch --flake .
+Hyprland 
+nvim flake.nix
+git add . ; sudo nixos-rebuild switch --flake .
+cd nixos-dots/
+cd ..
+exit
+nvim configuration.nix
+cd configs/
+cd nvim
+nvim
+cd ..
+clear
+cd configs/
+ls
+cd ..
+git add . ; sudo nixos-rebuild switch --flake .
+eww --help
+cd
+clear
+exit
+eww --help
+cd .config/
+ls
+ls -la
+clear
+eww
+cd ..
+ls
+cd nixos-dots/configs/
+ls
+mkdir eww
+cd ..
+ls
+nvim configuration.nix
+clear
+nvim
+clear
+exit
+exit
+zellij a
+zellij
+cd nixos-dots/configs/
+ls
+cd eww
+ls
+touch eww.yuck
+touch eww.scss
+ls
+cat /sys/class/power_supply/BAT1/capacity
+nvim eww.yuck
+eww open example
+cd ../..
+git add . ; sudo nixos-rebuild switch --flake .
+eww open example
+eww help
+eww close
+eww close example
+ls
+cd configs/
+ls
+cd eww
+ls
+eww open example
+eww close example
+eww open example
+eww close example
+eww
+eww ping
+eww open example
+eww close example
+eww open example
+eww close example
+eww open example
+cat /sys/class/power_supply/BAT1/capacity
+eww close example
+eww open example
+eww close example
+eww open example
+eww close example
+eww open example
+eww reload
+cat /sys/class/power_supply/BAT1/capacity
+eww reload
+cat /sys/class/power_supply/BAT1/capacity
+date
+date now
+eww reload
+bash -c date
+bash -c date --help
+bash
+clear
+eww close
+eww open bar
+cat /sys/class/power_supply/BAT1/capacity
+eww open bar-left
+eww open bar
+eww open bar-left
+eww reload
+eww open bar-right
+cat /sys/class/power_supply/BAT1/capacity
+eww reload
+cat /sys/class/power_supply/BAT1/capacity
+clear
+cat /sys/something/that/dpesn
+eww reload
+eww
+eww open bar-left bar-right bar-center
+cd nixos-dots/
+cd configs/
+ls
+exit
+zellij
+exit
+Hyprland 
+mkdir Documents
+cd Documents/
+ls
+ssh-key -t ed25519
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+ls
+cd ..
+cd nixos-dots/
+git status

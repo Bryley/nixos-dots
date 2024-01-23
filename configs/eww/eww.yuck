@@ -1,0 +1,45 @@
+(defwindow bar-center
+    :exclusive true
+    :monitor 0
+    ;; :windowtype "dock"
+    :stacking "bg"
+    :focusable false
+    :geometry (geometry :x "0%"
+                        :y "0px"
+                        :width "0"
+                        :height "30px"
+                        :anchor "bottom center")
+"")
+
+(defwindow bar-left
+    :exclusive true
+    :monitor 0
+    :stacking "bg"
+    :focusable false
+    :geometry (geometry :x "0%"
+                        :y "-30px"
+                        :width "180px"
+                        :height "30px"
+                        :anchor "bottom left")
+"Bryley's Computer")
+
+(defwindow bar-right
+    :exclusive true
+    :monitor 0
+    :stacking "bg"
+    :focusable false
+    :geometry (geometry :x "0%"
+                        :y "-30px"
+                        :width "150px"
+                        :height "30px"
+                        :anchor "bottom right")
+(right))
+
+(defpoll time :interval "1s" :initial "Time..." `date +%-I:%M' '%p`)
+(defpoll battery :interval "5s" :initial "" `cat /sys/class/power_supply/BAT1/capacity`)
+
+(defwidget right []
+  (box
+    {battery == "" ? "" : "${battery}%"}
+    "${time}"
+))

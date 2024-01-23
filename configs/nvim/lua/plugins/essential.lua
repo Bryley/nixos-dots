@@ -87,5 +87,9 @@ return {
         -- Better Quickfix window with previews and fuzzy file search
         'kevinhwang91/nvim-bqf'
     },
+    {
+        -- EIKowars Wacky Widgets .yuck file syntax
+        "elkowar/yuck.vim"
+    },
     -- TODO Terminal and Tmux integration
 }

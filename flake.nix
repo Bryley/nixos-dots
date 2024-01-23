@@ -1,8 +1,5 @@
 {
 
-  # TODO NTS: Working on trying to get symlinks to work, pretty close, just need
-  #  to get the flake directory in this code
-
   # TODO:
   # - [X] Nushell
   #   - [ ] Better completions
@@ -10,9 +7,14 @@
   # - [X] Zelidji or whatever the tmux alternative is
   # - [-] Neovim fullscreen command mode
   # - [X] Symlinks to .config
-  # - [ ] Hyprland
+  # - [X] Hyprland
+  #     - [X] Clipboard support
+  #     - [X] Polkit
+  #     - [ ] Wallpaper
   # - [ ] Bar for Hyprland
+  # - [ ] Plymouth
   # - [ ] Setup script for new system
+  # - [X] kitty config
 
   description = "Bryley's NixOS configuration";
 
@@ -21,27 +23,38 @@
     hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, hyprland }: {
+  outputs = { self, nixpkgs, hyprland }@inputs: {
     nixosConfigurations = let
       lib = nixpkgs.lib;
+      conditionalImport = path:
+        if builtins.pathExists path then
+          import path
+        else
+          {};
       nixSystemSetup = name: arch: nixpkgs.lib.nixosSystem rec{
         system = arch;
         pkgs = import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         };
+        specialArgs = { inherit inputs; };
         modules = [
+          ./hardware-confs/${name}.nix
+          # hyprland.nixosModules.default
           ({ ... }: {
             networking.hostName = name;
+            imports = [
+              (conditionalImport ./extra-confs/${name}.nix)
+            ];
           })
-          hyprland.nixosModules.default
           ./configuration.nix
-          ./hardware-confs/${name}.nix
         ];
       };
     in {
       virt = nixSystemSetup "virt" "aarch64-linux";
       virt2 = nixSystemSetup "virt2" "x86_64-linux";
+      laptop = nixSystemSetup "laptop" "x86_64-linux";
+
       # virt = lib.nixosSystem rec {
       #   system = "aarch64-linux";
       #   pkgs = import nixpkgs {
