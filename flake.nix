@@ -35,7 +35,13 @@
         system = arch;
         pkgs = import nixpkgs {
           inherit system;
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [
+              # This is required for obsidian to work until they update electron
+              "electron-25.9.0"
+            ];
+          };
         };
         specialArgs = { inherit inputs; };
         modules = [

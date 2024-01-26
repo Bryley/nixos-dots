@@ -30,19 +30,29 @@ let user = "bryley"; in {
   # services.printing.enable = true;
 
   # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
+  sound.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa = {
+      enable = true;
+      support32Bit = true;
+    };
+    pulse.enable = true;
+    jack.enable = true;
+  };
+  hardware.bluetooth.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Nix Dynamic Linker used for somethings like Neovim Mason
   programs.nix-ld.enable = true;
 
   # Add User
   users.users.${user} = {
     isNormalUser = true;
     description = "Bryley Hayter";
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = ["wheel" "networkmanager" "syncthing"];
     shell = pkgs.nushell;
   };
 
@@ -63,8 +73,18 @@ let user = "bryley"; in {
         ln -sfn ${dots}/hypr ${config}/hypr
         ln -sfn ${dots}/kitty ${config}/kitty
         ln -sfn ${dots}/eww ${config}/eww
+
+        chown -R ${user}:users ${config}
       fi
     '';
+  };
+
+  # Sync files across multiple computers http://127.0.0.1:8384/
+  services.syncthing = {
+    enable = true;
+    inherit user;
+    dataDir = "/home/${user}/Documents/vault";
+    configDir = "/home/${user}/.config/syncthing";
   };
 
   # Global Packages
@@ -77,6 +97,7 @@ let user = "bryley"; in {
     neovim    # IDE
     ripgrep   # Super fast searching in files
     fd        # Better `find` command
+    pavucontrol # Audio control
 
     nushell   # Modern shell
     zellij    # Modern Terminal Multiplexer
@@ -87,6 +108,9 @@ let user = "bryley"; in {
     lxqt.lxqt-policykit # Polkit Authentication Agent
 
     firefox   # Web Browser
+    cargo-leptos # Leptos Tools
+    flyctl    # Fly.io ctl command
+    obsidian  # Note taker
 
   ];
 
