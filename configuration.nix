@@ -73,6 +73,7 @@ let user = "bryley"; in {
         ln -sfn ${dots}/hypr ${config}/hypr
         ln -sfn ${dots}/kitty ${config}/kitty
         ln -sfn ${dots}/eww ${config}/eww
+        ln -sfn ${dots}/wofi ${config}/wofi
 
         chown -R ${user}:users ${config}
       fi
@@ -103,6 +104,11 @@ let user = "bryley"; in {
     zellij    # Modern Terminal Multiplexer
     kitty     # Terminal Emulator
     eww-wayland # EIKowars Wacky Widgets
+    swww      # Wallpaper daemon
+    wofi      # App launcher
+
+    # Python 3.10
+    (python310.withPackages(ps: with ps; [ rich virtualenv ]))
 
     wl-clipboard # Clipboard manager for Wayland
     lxqt.lxqt-policykit # Polkit Authentication Agent

@@ -4,11 +4,11 @@
     ;; :windowtype "dock"
     :stacking "bg"
     :focusable false
-    :geometry (geometry :x "0%"
-                        :y "0px"
+    :geometry (geometry :x "5px"
+                        :y "5px"
                         :width "0"
                         :height "30px"
-                        :anchor "bottom center")
+                        :anchor "top center")
 "")
 
 (defwindow bar-left
@@ -16,30 +16,47 @@
     :monitor 0
     :stacking "bg"
     :focusable false
-    :geometry (geometry :x "0%"
-                        :y "-30px"
-                        :width "180px"
+    :geometry (geometry :x "5px"
+                        :y "-25px"
+                        :width "1px"
                         :height "30px"
-                        :anchor "bottom left")
-"Bryley's Computer")
+                        :anchor "top left")
+(left))
 
 (defwindow bar-right
     :exclusive true
     :monitor 0
     :stacking "bg"
     :focusable false
-    :geometry (geometry :x "0%"
-                        :y "-30px"
-                        :width "150px"
+    :geometry (geometry :x "5px"
+                        :y "-25px"
+                        :width "180px"
                         :height "30px"
-                        :anchor "bottom right")
+                        :anchor "top right")
 (right))
 
-(defpoll time :interval "1s" :initial "Time..." `date +%-I:%M' '%p`)
-(defpoll battery :interval "5s" :initial "" `cat /sys/class/power_supply/BAT1/capacity`)
+(defpoll time :interval "1s" :initial "" `date +%-I:%M' '%p`)
+(defpoll battery :interval "2s" :initial "" `~/.config/eww/scripts/battery.py`)
+(deflisten workspaces :initial "" `~/.config/eww/scripts/workspace.py 0`)
+
+(defwidget left []
+  (box
+    :halign "start"
+    "  "
+    "${workspaces}"
+  )
+)
 
 (defwidget right []
   (box
-    {battery == "" ? "" : "${battery}%"}
-    "${time}"
+    {battery == "" ? "" : "${battery}"}
+    " |  ${time}"
 ))
+
+;; TODO:
+;; - [ ] Internet module
+;; - [ ] Volume Module / Window
+;; - [ ] Show date somewhere
+;; - [ ] Inspirational quote
+;; - [ ] Theme changer
+
