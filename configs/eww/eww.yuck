@@ -1,15 +1,14 @@
 (defwindow bar-center
     :exclusive true
     :monitor 0
-    ;; :windowtype "dock"
-    :stacking "bg"
+    :stacking "fg"
     :focusable false
     :geometry (geometry :x "5px"
                         :y "5px"
                         :width "0"
                         :height "30px"
                         :anchor "top center")
-"")
+(center))
 
 (defwindow bar-left
     :exclusive true
@@ -17,7 +16,7 @@
     :stacking "bg"
     :focusable false
     :geometry (geometry :x "5px"
-                        :y "-25px"
+                        :y "-30px"
                         :width "1px"
                         :height "30px"
                         :anchor "top left")
@@ -29,7 +28,7 @@
     :stacking "bg"
     :focusable false
     :geometry (geometry :x "5px"
-                        :y "-25px"
+                        :y "-30px"
                         :width "180px"
                         :height "30px"
                         :anchor "top right")
@@ -39,11 +38,34 @@
 (defpoll battery :interval "2s" :initial "" `~/.config/eww/scripts/battery.py`)
 (deflisten workspaces :initial "" `~/.config/eww/scripts/workspace.py 0`)
 
+(defvar wallpaper-loop false)
+(defpoll wallpaper-tooltip
+  :interval "1s"
+  :initial "..."
+  :run-while wallpaper-loop
+  `~/.config/eww/scripts/wallpaper.py display`
+)
+
 (defwidget left []
   (box
     :halign "start"
-    "  "
-    "${workspaces}"
+    "  ${workspaces}"
+  )
+)
+
+(defwidget center []
+  (box
+    "Theme: "
+    (eventbox
+      :class "btn"
+      :onhover `eww update wallpaper-loop=true`
+      :onhoverlost `eww update wallpaper-loop=false`
+      :onscroll `~/.config/eww/scripts/wallpaper.py group {}`
+      :onclick `~/.config/eww/scripts/wallpaper.py img up`
+      :onrightclick `~/.config/eww/scripts/wallpaper.py img down`
+      :tooltip "${wallpaper-tooltip}"
+      "󰸉"
+    )
   )
 )
 
@@ -53,10 +75,10 @@
     " |  ${time}"
 ))
 
-;; TODO:
+;; TODO List:
 ;; - [ ] Internet module
 ;; - [ ] Volume Module / Window
 ;; - [ ] Show date somewhere
-;; - [ ] Inspirational quote
-;; - [ ] Theme changer
+;; - [?] Inspirational quote
+;; - [-] Theme changer
 

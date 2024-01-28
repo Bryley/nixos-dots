@@ -31,7 +31,7 @@
           import path
         else
           {};
-      nixSystemSetup = name: arch: nixpkgs.lib.nixosSystem rec{
+      nixSystemSetup = name: arch: lib.nixosSystem rec{
         system = arch;
         pkgs = import nixpkgs {
           inherit system;
@@ -43,10 +43,9 @@
             ];
           };
         };
-        specialArgs = { inherit inputs; };
+        specialArgs = { user = "bryley"; inherit inputs; };
         modules = [
           ./hardware-confs/${name}.nix
-          # hyprland.nixosModules.default
           ({ ... }: {
             networking.hostName = name;
             imports = [
@@ -60,31 +59,6 @@
       virt = nixSystemSetup "virt" "aarch64-linux";
       virt2 = nixSystemSetup "virt2" "x86_64-linux";
       laptop = nixSystemSetup "laptop" "x86_64-linux";
-
-      # virt = lib.nixosSystem rec {
-      #   system = "aarch64-linux";
-      #   pkgs = import nixpkgs {
-      #     inherit system;
-      #     config.allowUnfree = true;
-      #   };
-      #   modules = [
-      #     hyprland.nixosModules.default
-      #     ./configuration.nix
-      #     ./hardware-confs/virt.nix
-      #   ];
-      # };
-      # virt2 = lib.nixosSystem rec {
-      #   system = "x86_64-linux";
-      #   pkgs = import nixpkgs {
-      #     inherit system;
-      #     config.allowUnfree = true;
-      #   };
-      #   modules = [
-      #     hyprland.nixosModules.default
-      #     ./configuration.nix
-      #     ./hardware-confs/virt2.nix
-      #   ];
-      # };
     };
   };
 }

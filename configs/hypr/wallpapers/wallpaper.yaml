@@ -1,0 +1,170 @@
+images:
+- name: ./4k-ai-mountain.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./art-lake.png
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./astronaut-nord.png
+  tags:
+  - dark
+- name: ./cute-town.png
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./forest.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./high-island.jpg
+  tags:
+  - landscape
+  - light
+- name: ./hill-house.png
+  tags:
+  - landscape
+  - light
+  - dark
+  - sunset
+- name: ./japanese-house.png
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./lets_go_home.png
+  tags:
+  - landscape
+  - light
+  - dark
+  - sunset
+- name: ./mountain.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+  - real
+- name: ./mountains.png
+  tags:
+  - landscape
+  - dark
+  - space
+- name: ./nature.jpg
+  tags:
+  - landscape
+  - dark
+  - space
+  - real
+- name: ./nord_car_live.gif
+  tags:
+  - city
+  - dark
+  - space
+  - live
+- name: ./oled-mountains.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+  - sunset
+  - real
+- name: ./pastel-window.png
+  tags:
+  - landscape
+  - light
+  - dark
+  - sunset
+  - cosy
+- name: ./pixel_big_city.png
+  tags:
+  - city
+  - light
+  - dark
+- name: ./planet_with_sunrise.png
+  tags:
+  - space
+  - dark
+  - sunset
+- name: ./planet_with_sunrise.png
+  tags:
+  - space
+  - dark
+  - sunset
+- name: ./rain-night.png
+  tags:
+  - landscape
+  - dark
+  - cosy
+- name: ./saturn-rings.jpg
+  tags:
+  - landscape
+  - space
+  - light
+  - dark
+  - sunset
+- name: ./scenic.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+  - real
+- name: ./stary-dock.jpg
+  tags:
+  - landscape
+  - space
+  - dark
+  - real
+- name: ./sunset-lake.jpg
+  tags:
+  - landscape
+  - dark
+  - sunset
+- name: ./sunset_city.png
+  tags:
+  - landscape
+  - city
+  - dark
+  - sunset
+- name: ./train_and_lake.png
+  tags:
+  - landscape
+  - light
+- name: ./shooting-star.png
+  tags:
+  - space
+  - dark
+- name: ./waterfall-calm.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+  - real
+- name: ./waterfall.gif
+  tags:
+  - landscape
+  - light
+  - dark
+  - live
+- name: ./wide_tokyonight_skyline.jpg
+  tags:
+  - landscape
+  - space
+  - light
+- name: ./windmill.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+- name: ./witcher.jpg
+  tags:
+  - landscape
+  - light
+  - dark
+  - real
+selected: ./scenic.jpg
+selected_group: landscape

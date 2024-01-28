@@ -2,9 +2,13 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ inputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, user, ... }:
 
-let user = "bryley"; in {
+{
+
+  imports = [
+    ./software.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -45,9 +49,6 @@ let user = "bryley"; in {
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Nix Dynamic Linker used for somethings like Neovim Mason
-  programs.nix-ld.enable = true;
-
   # Add User
   users.users.${user} = {
     isNormalUser = true;
@@ -80,68 +81,46 @@ let user = "bryley"; in {
     '';
   };
 
-  # Sync files across multiple computers http://127.0.0.1:8384/
-  services.syncthing = {
-    enable = true;
-    inherit user;
-    dataDir = "/home/${user}/Documents/vault";
-    configDir = "/home/${user}/.config/syncthing";
-  };
-
-  # Global Packages
-  environment.systemPackages = with pkgs; [
-    gcc       # C Compiler (used by lots of software)
-    unzip     # unzipping software
-    wget      # curl alternative
-    nodejs_21 # For npm
-    rustup    # Everything for Rust (cargo, rustc)
-    neovim    # IDE
-    ripgrep   # Super fast searching in files
-    fd        # Better `find` command
-    pavucontrol # Audio control
-
-    nushell   # Modern shell
-    zellij    # Modern Terminal Multiplexer
-    kitty     # Terminal Emulator
-    eww-wayland # EIKowars Wacky Widgets
-    swww      # Wallpaper daemon
-    wofi      # App launcher
-
-    # Python 3.10
-    (python310.withPackages(ps: with ps; [ rich virtualenv ]))
-
-    wl-clipboard # Clipboard manager for Wayland
-    lxqt.lxqt-policykit # Polkit Authentication Agent
-
-    firefox   # Web Browser
-    cargo-leptos # Leptos Tools
-    flyctl    # Fly.io ctl command
-    obsidian  # Note taker
-
-  ];
+  # # Global Packages
+  # environment.systemPackages = with pkgs; [
+  #   # System Essential Terminal Applications #
+  #   gcc       # C Compiler (used by lots of software)
+  #   unzip     # unzipping software
+  #   wget      # curl alternative
+  #   nodejs_21 # Javascript runtime & npm
+  #   rustup    # Everything for Rust (cargo, rustc)
+  #   ripgrep   # Super fast searching in files
+  #   fd        # Better `find` command
+  #   (python310.withPackages(ps: with ps; [ rich virtualenv ])) # Python 3.10
+  #
+  #   # Full Terminal Applications #
+  #   neovim    # IDE
+  #   nushell   # Modern shell
+  #   zellij    # Modern Terminal Multiplexer
+  #
+  #   # System Essential GUI Applications #
+  #   wl-clipboard # Clipboard manager for Wayland
+  #   kitty     # Terminal Emulator
+  #   eww-wayland # EIKowars Wacky Widgets (Used for status bar)
+  #   swww      # Wallpaper daemon
+  #   wofi      # App launcher
+  #   lxqt.lxqt-policykit # Polkit Authentication Agent
+  #
+  #   # Full GUI Applications #
+  #   firefox   # Web Browser
+  #   pavucontrol # Audio control
+  #   obsidian  # Note taker
+  #
+  #   # Terminal based applications #
+  #   cargo-leptos # Leptos Tools
+  #   flyctl    # Fly.io ctl command
+  #
+  # ];
 
   # Fonts
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "Hack" ]; })
   ];
-
-  programs.git = {
-    enable = true;
-    config = {
-      init = {
-        defaultBranch = "main";
-      };
-      user = {  
-        email = "bryleyhayter@gmail.com";
-        name = "Bryley Hayter";
-      };
-    };
-  };
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
