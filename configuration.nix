@@ -22,6 +22,12 @@
   # Set your time zone.
   time.timeZone = "Australia/Brisbane";
 
+  # Automatically garbage collect after a week
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
+
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
   # console = {
