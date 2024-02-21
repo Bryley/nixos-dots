@@ -12,6 +12,7 @@ let
     ripgrep   # Super fast searching in files
     fd        # Better `find` command
     fzf       # Fuzzy finder
+    usbutils  # USB Utils, commands like `lsusb`
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
 
     # Essential Full Terminal Applications #
@@ -27,6 +28,7 @@ let
     wofi      # App launcher
     lxqt.lxqt-policykit # Polkit Authentication Agent
     firefox   # Web Browser
+    google-chrome # Chrome browser for webdev testing
   ];
   addons = with pkgs; [
     pavucontrol # Audio control
@@ -34,6 +36,7 @@ let
     cargo-leptos # Leptos Tools
     flyctl    # Fly.io ctl command
     cinnamon.nemo-with-extensions # File explorer
+    android-studio # Android SDK and IDE for Android Phone development
   ];
   in {
     # Required Software #
@@ -51,6 +54,8 @@ let
         };
       };
     };
+
+    virtualisation.docker.enable = true;
 
     # Nix Dynamic Linker used for somethings like Neovim Mason
     programs.nix-ld.enable = true;

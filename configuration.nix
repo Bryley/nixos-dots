@@ -52,6 +52,10 @@
   };
   hardware.bluetooth.enable = true;
 
+  # Disable the firewall
+  networking.firewall.enable = false;
+  # networking.firewall.allowedTCPPorts = [ 3000 4000 5000 25565 ];
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -59,7 +63,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "Bryley Hayter";
-    extraGroups = ["wheel" "networkmanager" "syncthing"];
+    extraGroups = ["wheel" "networkmanager" "syncthing" "docker"];
     shell = pkgs.nushell;
   };
 
