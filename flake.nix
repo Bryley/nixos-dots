@@ -20,10 +20,26 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    hyprland.url = "github:hyprwm/Hyprland";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, hyprland }@inputs: {
+  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
+    homeConfigurations."bryley" = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      extraSpecialArgs = { inherit inputs; };
+      modules = [ ./home.nix ];
+    };
     nixosConfigurations = let
       lib = nixpkgs.lib;
       conditionalImport = path:

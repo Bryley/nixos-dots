@@ -13,6 +13,7 @@ let
     fd        # Better `find` command
     fzf       # Fuzzy finder
     usbutils  # USB Utils, commands like `lsusb`
+    home-manager # For handling dotfiles on NixOS
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
 
     # Essential Full Terminal Applications #

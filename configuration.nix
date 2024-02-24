@@ -68,28 +68,29 @@
   };
 
   # Config files
-  system.activationScripts.symlinks = let
-    dots = "/home/${user}/nixos-dots/configs";
-    homeDir = "/home/${user}";
-    config = "${homeDir}/.config";
-  in {
-    text = ''
-      if [ -d "${homeDir}" ]; then
-        mkdir -p ${config}
-
-        rm -r ${config}/nushell
-        ln -sfn ${dots}/nushell ${config}/nushell
-        ln -sfn ${dots}/nvim ${config}/nvim
-        ln -sfn ${dots}/zellij ${config}/zellij
-        ln -sfn ${dots}/hypr ${config}/hypr
-        ln -sfn ${dots}/kitty ${config}/kitty
-        ln -sfn ${dots}/eww ${config}/eww
-        ln -sfn ${dots}/wofi ${config}/wofi
-
-        chown -R ${user}:users ${config}
-      fi
-    '';
-  };
+  # Home Manager should do this now TODO remove
+  # system.activationScripts.symlinks = let
+  #   dots = "/home/${user}/nixos-dots/configs";
+  #   homeDir = "/home/${user}";
+  #   config = "${homeDir}/.config";
+  # in {
+  #   text = ''
+  #     if [ -d "${homeDir}" ]; then
+  #       mkdir -p ${config}
+  #
+  #       rm -r ${config}/nushell
+  #       ln -sfn ${dots}/nushell ${config}/nushell
+  #       ln -sfn ${dots}/nvim ${config}/nvim
+  #       ln -sfn ${dots}/zellij ${config}/zellij
+  #       ln -sfn ${dots}/hypr ${config}/hypr
+  #       ln -sfn ${dots}/kitty ${config}/kitty
+  #       ln -sfn ${dots}/eww ${config}/eww
+  #       ln -sfn ${dots}/wofi ${config}/wofi
+  #
+  #       chown -R ${user}:users ${config}
+  #     fi
+  #   '';
+  # };
 
   # # Global Packages
   # environment.systemPackages = with pkgs; [
