@@ -24,3 +24,8 @@ keymap("n", "<S-Right>", "<cmd>vertical resize -5<cr>", opts)
 keymap("n", "<S-Up>", "<cmd>resize +5<cr>", opts)
 keymap("n", "<S-Down>", "<cmd>resize -5<cr>", opts)
 
+-- Close the window and current buffer
+vim.api.nvim_create_user_command('Q', 'execute "BufDel" | close', {})
+
+-- Write the file first, then close the window and current buffer
+vim.api.nvim_create_user_command('WQ', 'write | execute "BufDel" | close', {})

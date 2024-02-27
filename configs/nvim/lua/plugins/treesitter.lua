@@ -2,6 +2,9 @@ return {
     {
         -- Parser for many languages that provides better highlighting
         "nvim-treesitter/nvim-treesitter",
+        dependencies = {
+            "vim-treesitter/nvim-treesitter-textobjects",
+        },
         build = ":TSUpdate",
         lazy = false,
         config = function()
@@ -13,7 +16,16 @@ return {
                     enable = true,
                     additional_vim_regex_highlighting = true,
                 },
+                textobjects = {
+                    select = {
+                        enable = true,
+                        keymaps = {
+                            ["ia"] = "@parameter.inner",
+                            ["aa"] = "@parameter.outer",
+                        },
+                    },
+                },
             })
-        end
+        end,
     },
 }

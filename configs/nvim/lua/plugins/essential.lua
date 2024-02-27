@@ -20,10 +20,10 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim",
         },
+        lazy = false,
         keys = {
             { "<F1>", "<cmd>SessionManager load_current_dir_session<cr>", desc = "Load last session" },
         },
-        lazy = false,
         config = function()
             require("session_manager").setup({
                 autoload_mode = require("session_manager.config").AutoloadMode.Disabled,
@@ -82,15 +82,31 @@ return {
     {
         -- Adds :BufDel command for a more intuitive buffer delete (binded to Alt-C)
         "ojroques/nvim-bufdel",
-        opts = {},
+        opts = {
+            -- Custom next function to go to the last visited buffer
+            next = function ()
+                local buf = vim.api.nvim_get_current_buf()
+                local jumplist = vim.fn.getjumplist()[1]
+
+                local size = #jumplist
+
+                for index, _ in ipairs(jumplist) do
+                    local element = jumplist[size - index + 1]
+                    local next_buf = element["bufnr"]
+
+                    if next_buf ~= buf then
+                        return next_buf
+                    end
+
+                end
+
+                return 0
+            end
+        },
     },
     {
         -- Better Quickfix window with previews and fuzzy file search
         'kevinhwang91/nvim-bqf'
-    },
-    {
-        -- EIKowars Wacky Widgets .yuck file syntax
-        "elkowar/yuck.vim"
     },
     -- TODO Terminal and Tmux integration
 }

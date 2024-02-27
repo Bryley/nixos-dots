@@ -186,7 +186,7 @@ $env.config = {
 # Handy aliases and small shell scripts
 
 # Find and goto dir recursively
-alias f = cd (fd --hidden --type directory --exclude node_modules --exclude .git --exclude .Trash --exclude target | fzf)
+alias f = cd (fd --hidden --type directory --exclude node_modules --exclude .git --exclude .Trash --exclude target --exclude vendor --exclude site-packages --exclude golang.org --exclude registry | fzf)
 
 # Activates a python virtualenv
 alias activate = overlay use ./.venv/bin/activate.nu

@@ -52,12 +52,12 @@ return {
         version = "*",
         dependencies = "nvim-tree/nvim-web-devicons",
         keys = {
-            { "<A-h>", "<cmd>bprev<cr>",   mode = "n", desc = "Prev Buffer" },
-            { "<A-l>", "<cmd>bnext<cr>",   mode = "n", desc = "Next Buffer" },
-            { "<A-c>", "<cmd>BufDel!<cr>", mode = "n", desc = "Close Buffer" },
-            { "<A-h>", "<cmd>bprev<cr>",   mode = "i", desc = "Prev Buffer" },
-            { "<A-l>", "<cmd>bnext<cr>",   mode = "i", desc = "Next Buffer" },
-            { "<A-c>", "<cmd>BufDel!<cr>", mode = "i", desc = "Close Buffer" },
+            { "<A-h>", "<cmd>bprev<cr>", mode = "n", desc = "Prev Buffer" },
+            { "<A-l>", "<cmd>bnext<cr>", mode = "n", desc = "Next Buffer" },
+            { "<A-c>", "<cmd>BufDel<cr>", mode = "n", desc = "Close Buffer" },
+            { "<A-h>", "<cmd>bprev<cr>", mode = "i", desc = "Prev Buffer" },
+            { "<A-l>", "<cmd>bnext<cr>", mode = "i", desc = "Next Buffer" },
+            { "<A-c>", "<cmd>BufDel<cr>", mode = "i", desc = "Close Buffer" },
         },
         opts = {
             options = {
@@ -72,7 +72,7 @@ return {
                     },
                 },
                 diagnostics = "nvim_lsp",
-                -- separator_style = "slant",
+                separator_style = "slant",
                 hover = {
                     enabled = true,
                     delay = 200,
@@ -88,36 +88,35 @@ return {
             "nvim-tree/nvim-web-devicons",
             "SmiteshP/nvim-navbuddy",
         },
-        opts = {
-            options = {
-                component_separators = "|",
-                section_separators = { left = "", right = "" },
-            },
-            winbar = {
-                lualine_c = {
-                    {
-                        "navic",
-                        color_correction = nil,
-                        navic_opts = nil,
+        config = function()
+            local navic = require("nvim-navic")
+
+            require("lualine").setup({
+                options = {
+                    component_separators = "|",
+                    section_separators = { left = "", right = "" },
+                },
+                sections = {
+                    lualine_c = { {"filename", path=1} },
+                },
+                inactive_sections = {
+                    lualine_c = { {"filename", path=1} },
+                },
+                winbar = {
+                    lualine_c = {
+                        {
+                            function()
+                                return navic.get_location()
+                            end,
+                            cond = function()
+                                return navic.is_available()
+                            end,
+                        },
                     },
                 },
-            },
-        },
+            })
+        end,
     },
-    -- This has been disabled for now due to flickering issues in Nvim 0.9, enable later
-    -- {
-    --     -- Contains better CMD Mode and better notifications
-    --     "folke/noice.nvim",
-    --     event = "VeryLazy",
-    --     dependencies = {
-    --         "MunifTanjim/nui.nvim",
-    --         -- Notification plugin
-    --         "rcarriga/nvim-notify",
-    --     },
-    --     opts = {
-    --         -- add any options here
-    --     },
-    -- },
     {
         -- Adds terminal window easily
         "akinsho/toggleterm.nvim",
