@@ -108,5 +108,13 @@ return {
         -- Better Quickfix window with previews and fuzzy file search
         'kevinhwang91/nvim-bqf'
     },
+    {
+        -- Change text to snake_case, camelCase, PascalCase, kebab-case and more
+        'johmsalas/text-case.nvim',
+        lazy = false,
+        config = function ()
+            require("textcase").setup({});
+        end,
+    }
     -- TODO Terminal and Tmux integration
 }
