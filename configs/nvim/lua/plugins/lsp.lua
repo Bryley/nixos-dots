@@ -1,3 +1,6 @@
+
+local enabled = true
+
 --- This function will be called for each LSP server to setup for lsp-config
 local function server_setup(lspconfig, capabilities, server_name)
     -- Check the language and change settings for each
@@ -153,6 +156,7 @@ end
 return {
     {
         "neovim/nvim-lspconfig",
+        cond = enabled,
         keys = {
             { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", desc = "goto definition" },
             { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "goto declaration" },
@@ -218,15 +222,17 @@ return {
     {
         -- Better LSP docs support for Neovim Lua code
         "folke/neodev.nvim",
+        cond = enabled,
         opts = {},
     },
     {
         -- Completion Engine for the LSP
         "hrsh7th/nvim-cmp",
+        cond = enabled,
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- Enables LSP auto completion
             "hrsh7th/cmp-buffer", -- Enables buffer completions
-            "FelipeLema/cmp-async-path", -- Enables path completions
+            "hrsh7th/cmp-path",     -- Path completions
             "hrsh7th/cmp-cmdline", -- Enables cmdline completions
             "hrsh7th/cmp-nvim-lua", -- Enables nvim lua autocompletions
             "folke/neodev.nvim",
@@ -272,7 +278,7 @@ return {
                 sources = cmp.config.sources({
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
-                    { name = "async_path" },
+                    { name = "path" },
                     { name = "luasnip" },
                     { name = "buffer", keyword_length = 3 },
                     { name = "crates" },
@@ -293,16 +299,19 @@ return {
     {
         -- Adds ability to use formatters and linters with LSP
         "nvimtools/none-ls.nvim",
+        cond = enabled,
         -- Config is done in the config of mason-null-ls
     },
     {
         -- Installer GUI for installing LSP servers, linters and formatters
         "williamboman/mason.nvim",
+        cond = enabled,
         config = true,
     },
     {
         -- Bridges gap between mason and lsp-config
         "williamboman/mason-lspconfig.nvim",
+        cond = enabled,
         dependencies = {
             "williamboman/mason.nvim",
         },
@@ -315,23 +324,24 @@ return {
     {
         -- Bridges the gap between null-ls (now called none-ls) and mason
         "jay-babu/mason-null-ls.nvim",
+        cond = enabled,
         dependencies = {
             "williamboman/mason.nvim",
             "nvimtools/none-ls.nvim",
         },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { "stylua", "prettier" },
+                ensure_installed = { "stylua", }, --"prettier" },
                 automatic_installation = false,
                 handlers = {},
             })
             require("null-ls").setup({
                 sources = {
                     -- Put anything here not supported by mason
-                    require("null-ls").builtins.formatting.prettier.with({
-                        extra_args = { "--tab-width", "4", "--use-tabs", "false" },
-                        -- Additional configurations here
-                    }),
+                    -- require("null-ls").builtins.formatting.prettier.with({
+                    --     extra_args = { "--tab-width", "4", "--use-tabs", "false" },
+                    --     -- Additional configurations here
+                    -- }),
                 },
             })
         end,
@@ -339,6 +349,7 @@ return {
     {
         -- Adds snippets to NeoVim
         "L3MON4D3/LuaSnip",
+        cond = enabled,
         version = "v2.*",
         config = function()
             require("luasnip.loaders.from_snipmate").load()
@@ -347,6 +358,7 @@ return {
     {
         -- Rust LSP plugin for managing crate dependencies and features
         "saecki/crates.nvim",
+        cond = enabled,
         event = { "BufRead Cargo.toml" },
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
@@ -360,12 +372,14 @@ return {
     },
     {
         "mrcjkb/rustaceanvim",
+        cond = enabled,
         version = "^4", -- Recommended
         ft = { "rust" },
     },
     {
         -- Plugin for nushell lsp features
         "LhKipp/nvim-nu",
+        cond = enabled,
         build = ":TSInstall nu",
         config = function()
             require("nu").setup({})
@@ -374,11 +388,13 @@ return {
     {
         -- Adds LSP progress in bottom right corner as virtual text
         "j-hui/fidget.nvim",
+        cond = enabled,
         opts = {},
     },
     {
         -- Breadcrumbs at top
         "SmiteshP/nvim-navic",
+        cond = enabled,
         dependencies = {
             "neovim/nvim-lspconfig",
         },
@@ -391,6 +407,7 @@ return {
     {
         -- Breadcrumbs GUI menu
         "SmiteshP/nvim-navbuddy",
+        cond = enabled,
         dependencies = {
             "neovim/nvim-lspconfig",
             "SmiteshP/nvim-navic",

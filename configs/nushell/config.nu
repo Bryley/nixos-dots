@@ -201,15 +201,16 @@ def gitopen [] {
 }
 
 # This is aliasing nvim so that Mason will work with nixos
-alias _nvim = nvim
+# TODO: Disabled for now, think about enabling nix ld system wide instead of just Nvim
+# alias _nvim = nvim
+#
+# let nixld = (if (echo "/etc/NIXOS" | path exists) {
+#     # If on NixOS then set up the nix_ld dynamic linker (note it needs to be installed)
+#     (nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+# } else {
+#     ""
+# })
 
-let nixld = (if (echo "/etc/NIXOS" | path exists) {
-    # If on NixOS then set up the nix_ld dynamic linker (note it needs to be installed)
-    (nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
-} else {
-    ""
-})
-
-def nvim [...$args] {
-    NIX_LD=$nixld _nvim $args
-}
+# def nvim [...$args] {
+#     NIX_LD=$nixld _nvim $args
+# }

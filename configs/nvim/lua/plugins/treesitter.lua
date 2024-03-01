@@ -3,7 +3,7 @@ return {
         -- Parser for many languages that provides better highlighting
         "nvim-treesitter/nvim-treesitter",
         dependencies = {
-            "vim-treesitter/nvim-treesitter-textobjects",
+            "nvim-treesitter/nvim-treesitter-textobjects",
         },
         build = ":TSUpdate",
         lazy = false,
