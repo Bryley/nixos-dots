@@ -331,17 +331,17 @@ return {
         },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { "stylua", }, --"prettier" },
+                ensure_installed = { "stylua", "prettier" },
                 automatic_installation = false,
                 handlers = {},
             })
             require("null-ls").setup({
                 sources = {
                     -- Put anything here not supported by mason
-                    -- require("null-ls").builtins.formatting.prettier.with({
-                    --     extra_args = { "--tab-width", "4", "--use-tabs", "false" },
-                    --     -- Additional configurations here
-                    -- }),
+                    require("null-ls").builtins.formatting.prettier.with({
+                        extra_args = { "--tab-width", "4", "--use-tabs", "false" },
+                        -- Additional configurations here
+                    }),
                 },
             })
         end,
