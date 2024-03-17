@@ -130,7 +130,7 @@
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "Hack" ]; })
+    (nerdfonts.override { fonts = [ "Hack" "Ubuntu" "CascadiaCode"  ]; })
   ];
 
   # Enable the OpenSSH daemon.

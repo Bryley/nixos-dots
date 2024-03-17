@@ -13,7 +13,10 @@ let
     fd        # Better `find` command
     fzf       # Fuzzy finder
     usbutils  # USB Utils, commands like `lsusb`
+    bun       # Modern Javascript runtime and needed for AGS
+    sass      # Sass cli tool to convert scss files to css (for use with AGS)
     home-manager # For handling dotfiles on NixOS
+    just      # Replacement for Make
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
 
     # Essential Full Terminal Applications #
@@ -57,6 +60,9 @@ let
     };
 
     virtualisation.docker.enable = true;
+
+    # Needed for the battery service used in ASG
+    services.upower.enable = true;
 
     # Nix Dynamic Linker used for somethings like Neovim Mason
     programs.nix-ld.enable = true;
