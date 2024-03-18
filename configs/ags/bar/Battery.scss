@@ -1,0 +1,30 @@
+
+.w-battery {
+    margin-top: 3px;
+    margin-bottom: 3px;
+
+    levelbar * {
+        all: unset;
+    }
+
+    block {
+        all: unset;
+        margin: 0;
+
+        min-width: 8px;
+        background: $backdrop-dark;
+
+        &.filled:not(.low) {
+            background: $success;
+        }
+        &.filled.low {
+            background: $error;
+        }
+        &:first-child {
+            border-radius: 9999px 0 0 9999px;
+        }
+        &:last-child {
+            border-radius: 0 9999px 9999px 0;
+        }
+    }
+}

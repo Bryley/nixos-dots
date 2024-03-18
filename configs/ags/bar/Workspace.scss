@@ -1,0 +1,27 @@
+
+.workspace {
+    margin-left: 10px;
+    label {
+        background: $foreground;
+        min-width: 10px;
+        min-height: 10px;
+        border-radius: 999px;
+        margin-left: 2px;
+        margin-right: 2px;
+        font-size: 1px;
+        opacity: 0.2;
+
+        &.occupied {
+            min-width: 11px;
+            min-height: 11px;
+            opacity: 1;
+        }
+
+        &.active {
+            opacity: 1;
+            background: #157ba3;
+            min-width: 11px;
+            min-height: 11px;
+        }
+    }
+}

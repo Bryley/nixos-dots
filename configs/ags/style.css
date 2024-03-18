@@ -1,0 +1,53 @@
+
+/* * { */
+    /* Resetting only specific properties rather than all */
+    /* box-shadow: none; */
+    /* text-shadow: none; */
+    /* background: none; */
+    /* border: none; */
+    /* margin: 0; */
+    /* padding: 0; */
+    /* Avoid resetting font properties here, as they are usually okay to inherit */
+/* } */
+
+window {
+    background: #383838;
+    color: #a1a1a1;
+}
+
+button {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: 0.3em 5em;
+
+    font-weight: bold;
+    color: #a1a1a1;
+
+    padding: 0.1em 1.2em;
+    border-radius: 9999px;
+}
+
+progressbar {
+    
+}
+
+progressbar > trough {
+    background-color: orange;
+    min-height: 20px;
+    border-radius: 9999px;
+}
+progressbar progress {
+    background-color: red;
+    min-height: 20px;
+    border-radius: 9999px;
+}
+
+button {
+    box-shadow: none;
+    text-shadow: none;
+}
+
+button:hover {
+    background-color: #424242;
+}

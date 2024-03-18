@@ -20,6 +20,19 @@
     dates = "weekly";
   };
 
+  # Automatic system upgrades
+  system.autoUpgrade = {
+    enable = true;
+    flake = inputs.self.outPath;
+    flags = [
+      "--update-input"
+      "nixpkgs"
+      "-L"
+    ];
+    dates = "09:00";
+    randomizedDelaySec = "45min";
+  };
+
   # Australian Locale
   i18n.defaultLocale = "en_AU.UTF-8";
 
