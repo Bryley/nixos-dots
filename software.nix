@@ -56,6 +56,7 @@ let
           email = "bryleyhayter@gmail.com";
           name = "Bryley Hayter";
         };
+        pull.rebase = "false";
       };
     };
 
