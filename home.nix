@@ -35,6 +35,10 @@
       source = ./configs/hypr;
       recursive = true;
     };
+    ".config/ags" = {
+      source = ./configs/ags;
+      recursive = true;
+    };
     ".config/nushell" = {
       source = ./configs/nushell;
       recursive = true;
