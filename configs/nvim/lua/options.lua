@@ -23,7 +23,7 @@ opt.wrap = false            -- Disables text wrapping
 opt.scrolloff = 3           -- Keep 3 lines above and below when scrolling
 opt.sidescrolloff = 3       -- Same as `scrolloff` except horizontal
 
--- opt.lazyredraw = true       -- Prevents nvim from redrawing when it doesn't need too
+opt.lazyredraw = true       -- Prevents nvim from redrawing when it doesn't need too
 opt.termguicolors = true    -- Color support
 opt.showmode = true         -- Shows current mode in bottom left-hand corner
 opt.cursorline = true       -- Highlight current line
@@ -44,7 +44,7 @@ opt.autoindent = true       -- Automatically indent lines as you type
 -- vim.cmd([[autocmd FileType markdown,norg,txt setlocal textwidth=80]])
 
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"*.md", "*.txt"},
+    pattern = {"markdown", "norg", "txt"},
     callback = function ()
         vim.opt_local.textwidth = 80
     end

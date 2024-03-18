@@ -1,4 +1,144 @@
 
+local enabled = true
+
+--- This function will be called for each LSP server to setup for lsp-config
+local function server_setup(lspconfig, capabilities, server_name)
+    -- Check the language and change settings for each
+    local settings = nil
+    local filetypes = lspconfig[server_name].document_config.default_config.filetypes
+    local on_attach = function(client, bufnr)
+        if client.server_capabilities.documentSymbolProvider then
+            require("nvim-navic").attach(client, bufnr)
+        end
+    end
+    if server_name == "lua_ls" then
+        settings = {
+            Lua = {
+                diagnostics = {
+                    globals = {
+                        "vim",
+                        "describe",
+                        "it",
+                        "before_each",
+                        "after_each",
+                        "before",
+                        "after",
+                        "assert",
+                        "spy",
+                        "mock",
+                        "stub",
+                        "pending",
+                        "teardown",
+                        "setup",
+                        "lazy_setup",
+                        "lazy_teardown",
+                    },
+                },
+            },
+        }
+    elseif server_name == "pyright" then
+        settings = {
+            python = {
+                analysis = {
+                    autoSearchPaths = true,
+                    diagnosticMode = "workspace",
+                    useLibraryCodeForTypes = true,
+                },
+            },
+        }
+    elseif server_name == "rust_analyzer" then
+        settings = {
+            ["rust-analyzer"] = {
+                cargo = {
+                    features = "all",
+                },
+                check = {
+                    command = "clippy",
+                },
+                files = {
+                    excludeDirs = {
+                        "_build",
+                        ".dart_tool",
+                        ".flatpak-builder",
+                        ".git",
+                        ".gitlab",
+                        ".gitlab-ci",
+                        ".gradle",
+                        ".idea",
+                        ".next",
+                        ".project",
+                        ".scannerwork",
+                        ".settings",
+                        ".venv",
+                        "archetype-resources",
+                        "bin",
+                        "hooks",
+                        "node_modules",
+                        "frontend/node_modules",
+                        "po",
+                        "screenshots",
+                        "target",
+                    },
+                    watcherExclude = {
+                        ["**/_build"] = true,
+                        ["**/.classpath"] = true,
+                        ["**/.dart_tool"] = true,
+                        ["**/.factorypath"] = true,
+                        ["**/.flatpak-builder"] = true,
+                        ["**/.git/objects/**"] = true,
+                        ["**/.git/subtree-cache/**"] = true,
+                        ["**/.idea"] = true,
+                        ["**/.project"] = true,
+                        ["**/.scannerwork"] = true,
+                        ["**/.settings"] = true,
+                        ["**/.venv"] = true,
+                        ["**/node_modules"] = true,
+                    },
+                },
+            },
+        }
+        -- The rustaceanvim plugin handles setting up RA. So don't use lsp-config
+        vim.g.rustaceanvim = {
+            -- Plugin configuration
+            tools = {},
+            -- LSP configuration
+            server = {
+                on_attach = on_attach,
+                default_settings = settings,
+            },
+            -- DAP configuration
+            dap = {},
+        }
+        return
+    elseif server_name == "htmx" then
+        filetypes = { "html", "htmldjango" }
+    elseif server_name == "jsonls" then
+        settings = {
+            json = {
+                schemas = require("schemastore").json.schemas({
+                    extra = {
+                        -- TODO only works on workmac and should be removed later
+                        {
+                            description = "Mapping Service Test File",
+                            fileMatch = "mapping-service-v2/tests/*.json",
+                            name = "mapping-service-v2-test.json",
+                            url = "file:///Users/bryley/Documents/repos/trading-dev/mapping-service/mapping-service-v2/mapping-service-test-schema.json",
+                        },
+                    },
+                }),
+                validate = { enable = true },
+            },
+        }
+    end
+
+    lspconfig[server_name].setup({
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = settings,
+        filetypes = filetypes,
+    })
+end
+
 --- Need this function to change documentation popup for crates
 local function show_documentation()
     local filetype = vim.bo.filetype
@@ -16,20 +156,23 @@ end
 return {
     {
         "neovim/nvim-lspconfig",
+        cond = enabled,
         keys = {
-            { "gd",    "<cmd>lua vim.lsp.buf.definition()<CR>",     desc = "goto definition" },
-            { "gD",    "<cmd>lua vim.lsp.buf.declaration()<CR>",    desc = "goto declaration" },
-            { "gr",    "<cmd>lua vim.lsp.buf.references()<CR>",     desc = "goto references" },
-            { "gi",    "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "goto implementations" },
-            { "K",     show_documentation,                          desc = "show docs" },
+            { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", desc = "goto definition" },
+            { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", desc = "goto declaration" },
+            { "gr", "<cmd>lua vim.lsp.buf.references()<CR>", desc = "goto references" },
+            { "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", desc = "goto implementations" },
+            { "K", show_documentation, desc = "show docs" },
             { "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", desc = "Show signature" },
-            { "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>",   desc = "goto prev diagnostic" },
-            { "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>",   desc = "goto next diagnostic" },
+            { "<C-p>", "<cmd>lua vim.diagnostic.goto_prev()<CR>", desc = "goto prev diagnostic" },
+            { "<C-n>", "<cmd>lua vim.diagnostic.goto_next()<CR>", desc = "goto next diagnostic" },
         },
         dependencies = {
             "hrsh7th/nvim-cmp",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
+            -- Includes JSON & YAML schemas
+            "b0o/schemastore.nvim",
         },
         config = function()
             --------------------------------
@@ -67,83 +210,29 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             require("mason-lspconfig").setup_handlers({
                 function(server_name)
-                    -- Check the language and change settings for each
-                    local settings = nil
-                    local filetypes = lspconfig[server_name].document_config.default_config.filetypes
-                    if server_name == "lua_ls" then
-                        settings = {
-                            Lua = {
-                                diagnostics = {
-                                    globals = {
-                                        "vim",
-                                        "describe",
-                                        "it",
-                                        "before_each",
-                                        "after_each",
-                                        "before",
-                                        "after",
-                                        "assert",
-                                        "spy",
-                                        "mock",
-                                        "stub",
-                                        "pending",
-                                        "teardown",
-                                        "setup",
-                                        "lazy_setup",
-                                        "lazy_teardown",
-                                    },
-                                },
-                            },
-                        }
-                    elseif server_name == "pyright" then
-                        settings = {
-                            python = {
-                                analysis = {
-                                    autoSearchPaths = true,
-                                    diagnosticMode = "workspace",
-                                    useLibraryCodeForTypes = true,
-                                },
-                            },
-                        }
-                    elseif server_name == "rust_analyzer" then
-                        settings = {
-                            ["rust-analyzer"] = {
-                                cargo = {
-                                    allFeatures = true,
-                                },
-                                check = {
-                                    command = "clippy",
-                                },
-                            },
-                        }
-                    elseif server_name == "htmx" then
-                        filetypes = { "html", "htmldjango" }
-                    end
-
-                    lspconfig[server_name].setup({
-                        capabilities = capabilities,
-                        settings = settings,
-                        filetypes = filetypes,
-                    })
+                    server_setup(lspconfig, capabilities, server_name)
                 end,
             })
-            lspconfig.nushell.setup{
+            -- Manually setup nushell LSP as it doesn't come through Mason
+            lspconfig.nushell.setup({
                 capabilities = capabilities,
-            }
+            })
         end,
     },
     {
         -- Better LSP docs support for Neovim Lua code
         "folke/neodev.nvim",
+        cond = enabled,
         opts = {},
     },
     {
         -- Completion Engine for the LSP
         "hrsh7th/nvim-cmp",
+        cond = enabled,
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- Enables LSP auto completion
             "hrsh7th/cmp-buffer", -- Enables buffer completions
-            "FelipeLema/cmp-async-path", -- Enables path completions
+            "hrsh7th/cmp-path",     -- Path completions
             "hrsh7th/cmp-cmdline", -- Enables cmdline completions
             "hrsh7th/cmp-nvim-lua", -- Enables nvim lua autocompletions
             "folke/neodev.nvim",
@@ -171,6 +260,7 @@ return {
                     ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
                     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
                     ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
                     ["<C-n>"] = function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
@@ -189,9 +279,9 @@ return {
                 sources = cmp.config.sources({
                     { name = "nvim_lua" },
                     { name = "nvim_lsp" },
-                    { name = "async_path" },
+                    { name = "path" },
                     { name = "luasnip" },
-                    { name = "buffer",    keyword_length = 3 },
+                    { name = "buffer", keyword_length = 3 },
                     { name = "crates" },
                 }),
                 formatting = {
@@ -210,41 +300,49 @@ return {
     {
         -- Adds ability to use formatters and linters with LSP
         "nvimtools/none-ls.nvim",
+        cond = enabled,
         -- Config is done in the config of mason-null-ls
     },
     {
         -- Installer GUI for installing LSP servers, linters and formatters
         "williamboman/mason.nvim",
+        cond = enabled,
         config = true,
     },
     {
         -- Bridges gap between mason and lsp-config
         "williamboman/mason-lspconfig.nvim",
+        cond = enabled,
         dependencies = {
             "williamboman/mason.nvim",
         },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "pyright" },
+                ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "jsonls" },
             })
         end,
     },
     {
         -- Bridges the gap between null-ls (now called none-ls) and mason
         "jay-babu/mason-null-ls.nvim",
+        cond = enabled,
         dependencies = {
             "williamboman/mason.nvim",
             "nvimtools/none-ls.nvim",
         },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { "stylua" },
+                ensure_installed = { "stylua", "prettier" },
                 automatic_installation = false,
                 handlers = {},
             })
             require("null-ls").setup({
                 sources = {
                     -- Put anything here not supported by mason
+                    require("null-ls").builtins.formatting.prettier.with({
+                        extra_args = { "--tab-width", "4", "--use-tabs", "false" },
+                        -- Additional configurations here
+                    }),
                 },
             })
         end,
@@ -252,6 +350,7 @@ return {
     {
         -- Adds snippets to NeoVim
         "L3MON4D3/LuaSnip",
+        cond = enabled,
         version = "v2.*",
         config = function()
             require("luasnip.loaders.from_snipmate").load()
@@ -260,6 +359,7 @@ return {
     {
         -- Rust LSP plugin for managing crate dependencies and features
         "saecki/crates.nvim",
+        cond = enabled,
         event = { "BufRead Cargo.toml" },
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
@@ -272,21 +372,30 @@ return {
         end,
     },
     {
+        "mrcjkb/rustaceanvim",
+        cond = enabled,
+        version = "^4", -- Recommended
+        ft = { "rust" },
+    },
+    {
         -- Plugin for nushell lsp features
         "LhKipp/nvim-nu",
+        cond = enabled,
         build = ":TSInstall nu",
         config = function()
-            require'nu'.setup{}
+            require("nu").setup({})
         end,
     },
     {
         -- Adds LSP progress in bottom right corner as virtual text
         "j-hui/fidget.nvim",
+        cond = enabled,
         opts = {},
     },
     {
         -- Breadcrumbs at top
         "SmiteshP/nvim-navic",
+        cond = enabled,
         dependencies = {
             "neovim/nvim-lspconfig",
         },
@@ -299,6 +408,7 @@ return {
     {
         -- Breadcrumbs GUI menu
         "SmiteshP/nvim-navbuddy",
+        cond = enabled,
         dependencies = {
             "neovim/nvim-lspconfig",
             "SmiteshP/nvim-navic",
