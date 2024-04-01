@@ -340,7 +340,7 @@ return {
                 sources = {
                     -- Put anything here not supported by mason
                     require("null-ls").builtins.formatting.prettier.with({
-                        extra_args = { "--tab-width", "4", "--use-tabs", "false" },
+                        extra_args = { "--use-tabs", "false" },
                         -- Additional configurations here
                     }),
                 },

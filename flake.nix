@@ -1,6 +1,6 @@
 {
 
-  # TODO:
+  # TODO LIST:
   # - [X] Nushell
   #   - [ ] Better completions
   #   - [X] Setup neovim to use NIX_LD env var using alias probably
@@ -15,6 +15,7 @@
   # - [ ] Plymouth
   # - [ ] Setup script for new system
   # - [X] kitty config
+  # - [ ] Automatically apply .gitmessage as the git template using nix
 
   description = "Bryley's NixOS configuration";
 
