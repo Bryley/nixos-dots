@@ -26,6 +26,8 @@ let
 
     # System Essential GUI Applications #
     wl-clipboard # Clipboard manager for Wayland
+    # TODO NTS: Make sure to get this cursor set working
+    # apple-cursor # Cursor theme set apple inspired
     kitty     # Terminal Emulator
     eww-wayland # EIKowars Wacky Widgets (Used for status bar)
     swww      # Wallpaper daemon
