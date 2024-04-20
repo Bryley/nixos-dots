@@ -170,9 +170,7 @@ $env.config = {
             max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
             completer: $carapace_completer
         }
-    }
-
-    cursor_shape: {
+    } cursor_shape: {
         emacs: line
         vi_insert: line
         vi_normal: block
@@ -203,12 +201,16 @@ def gitopen [] {
 # TODO: Disabled for now, think about enabling nix ld system wide instead of just Nvim
 # alias _nvim = nvim
 #
-# let nixld = (if (echo "/etc/NIXOS" | path exists) {
-#     # If on NixOS then set up the nix_ld dynamic linker (note it needs to be installed)
-#     (nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
-# } else {
-#     ""
-# })
+let nixld = (if (echo "/etc/NIXOS" | path exists) {
+    # If on NixOS then set up the nix_ld dynamic linker (note it needs to be installed)
+    (nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+} else {
+    ""
+})
+
+$env.NIX_LD = $nixld
+
+# $env.NIX_LD=$nixld
 
 # def nvim [...$args] {
 #     NIX_LD=$nixld _nvim $args

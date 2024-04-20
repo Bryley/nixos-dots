@@ -67,11 +67,16 @@ let
     # Needed for the battery service used in ASG
     services.upower.enable = true;
 
+    # Nix Dynamic Linker used for somethings like Neovim Mason
+    programs.nix-ld.enable = true;
+    # environment.variables = {
+    #   NIX_LD = "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+    # };
+
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
-
 
     # Optional software groups #
 
