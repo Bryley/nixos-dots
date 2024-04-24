@@ -35,6 +35,8 @@ let
     lxqt.lxqt-policykit # Polkit Authentication Agent
     firefox   # Web Browser
     google-chrome # Chrome browser for webdev testing
+    libreoffice # Office Suite
+    xournalpp # PDF editor
   ];
   addons = with pkgs; [
     pavucontrol # Audio control
