@@ -20,6 +20,11 @@ push:
 	git checkout local-changes
 	git reset --hard main
 
+pull:
+	git pull origin main
+	git checkout local-changes
+	git rebase origin/main
+
 
 # rebuild:
 #     bash ./rebuild.sh
