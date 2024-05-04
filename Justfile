@@ -6,7 +6,7 @@ generation := `sudo nix-env --list-generations -p /nix/var/nix/profiles/system |
 
 switch:
 	git commit -am "{{generation}}"
-	nh os switch
+	nh os switch .
 
 rebuild:
     bash ./rebuild.sh
