@@ -4,6 +4,7 @@
 let
   requiredSoftware = with pkgs; [
     # System Essential Terminal Applications #
+    nh        # NixOS helper commands
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
     wget      # curl alternative
