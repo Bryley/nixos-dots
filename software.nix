@@ -4,6 +4,7 @@
 let
   requiredSoftware = with pkgs; [
     # System Essential Terminal Applications #
+    nh        # NixOS helper commands
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
     wget      # curl alternative
@@ -26,6 +27,8 @@ let
 
     # System Essential GUI Applications #
     wl-clipboard # Clipboard manager for Wayland
+    # TODO NTS: Make sure to get this cursor set working
+    # apple-cursor # Cursor theme set apple inspired
     kitty     # Terminal Emulator
     eww-wayland # EIKowars Wacky Widgets (Used for status bar)
     swww      # Wallpaper daemon
@@ -33,6 +36,8 @@ let
     lxqt.lxqt-policykit # Polkit Authentication Agent
     firefox   # Web Browser
     google-chrome # Chrome browser for webdev testing
+    libreoffice # Office Suite
+    xournalpp # PDF editor
   ];
   addons = with pkgs; [
     pavucontrol # Audio control
@@ -67,12 +72,14 @@ let
 
     # Nix Dynamic Linker used for somethings like Neovim Mason
     programs.nix-ld.enable = true;
+    # environment.variables = {
+    #   NIX_LD = "${pkgs.stdenv.cc}/nix-support/dynamic-linker";
+    # };
 
     programs.hyprland = {
       enable = true;
       package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
-
 
     # Optional software groups #
 
