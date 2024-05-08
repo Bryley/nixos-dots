@@ -36,7 +36,8 @@ def create_left_prompt [] {
 }
 
 def get_git_info [] {
-    let status = do --ignore-errors {git --no-optional-locks status --porcelain=2 --branch | lines}
+    # let status = do --ignore-errors {git --no-optional-locks status --porcelain=2 --branch | lines}
+    let status = do --ignore-errors {git --no-optional-locks status --porcelain=2 --branch | complete | get stdout | lines}
 
     if ($status | is-empty) {
         return ""

@@ -129,6 +129,13 @@ local function server_setup(lspconfig, capabilities, server_name)
                 validate = { enable = true },
             },
         }
+    elseif server_name == "yamlls" then
+        settings = {
+            yaml = {
+                schemas = require("schemastore").yaml.schemas({}),
+                validate = { enable = true },
+            },
+        }
     end
 
     lspconfig[server_name].setup({
@@ -170,6 +177,7 @@ return {
         dependencies = {
             "hrsh7th/nvim-cmp",
             "williamboman/mason.nvim",
+            "jay-babu/mason-nvim-dap.nvim",
             "williamboman/mason-lspconfig.nvim",
             -- Includes JSON & YAML schemas
             "b0o/schemastore.nvim",
