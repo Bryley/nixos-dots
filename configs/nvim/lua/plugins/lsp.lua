@@ -132,7 +132,17 @@ local function server_setup(lspconfig, capabilities, server_name)
     elseif server_name == "yamlls" then
         settings = {
             yaml = {
-                schemas = require("schemastore").yaml.schemas({}),
+                schemas = require("schemastore").yaml.schemas({
+                    extra = {
+                        {
+                            description = "Kubernetes deployment files",
+                            url = "https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json",
+                            name = "deployment.yaml",
+                            fileMatch = "deployment.yaml",
+
+                        },
+                    }
+                }),
                 validate = { enable = true },
             },
         }
