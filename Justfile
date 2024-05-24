@@ -11,6 +11,9 @@ switch:
 	nh os switch .
 	nh home switch .
 
+home:
+	nh home switch .
+
 push:
 	git checkout main
 	git pull origin main
@@ -19,6 +22,11 @@ push:
 	git push
 	git checkout local-changes
 	git reset --hard main
+
+pull:
+	git pull origin main
+	git checkout local-changes
+	git rebase origin/main
 
 
 # rebuild:

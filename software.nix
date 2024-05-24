@@ -7,8 +7,9 @@ let
     nh        # NixOS helper commands
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
+    xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
-    nodejs_21 # Javascript runtime & npm
+    nodejs_22 # Javascript runtime & npm
     rustup    # Everything for Rust (cargo, rustc)
     ripgrep   # Super fast searching in files
     fd        # Better `find` command
@@ -27,17 +28,22 @@ let
 
     # System Essential GUI Applications #
     wl-clipboard # Clipboard manager for Wayland
-    # TODO NTS: Make sure to get this cursor set working
-    # apple-cursor # Cursor theme set apple inspired
+    spacedrive  # Cool file explorer
     kitty     # Terminal Emulator
     eww-wayland # EIKowars Wacky Widgets (Used for status bar)
     swww      # Wallpaper daemon
     wofi      # App launcher
     lxqt.lxqt-policykit # Polkit Authentication Agent
     firefox   # Web Browser
+    brave     # Web Browser
+    wofi      # App Launcher
     google-chrome # Chrome browser for webdev testing
     libreoffice # Office Suite
     xournalpp # PDF editor
+    evince    # PDF viewer
+
+    # TODO NTS: Make sure to get this cursor set working
+    # apple-cursor # Cursor theme set apple inspired
   ];
   addons = with pkgs; [
     pavucontrol # Audio control
