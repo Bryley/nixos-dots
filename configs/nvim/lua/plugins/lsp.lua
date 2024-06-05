@@ -1,4 +1,3 @@
-
 local enabled = true
 
 --- This function will be called for each LSP server to setup for lsp-config
@@ -129,20 +128,32 @@ local function server_setup(lspconfig, capabilities, server_name)
                 validate = { enable = true },
             },
         }
+    elseif server_name == "helm_ls" then
+        settings = {
+            ["helm-ls"] = {
+                yamlls = {
+                    path = "yaml-language-server",
+                },
+            },
+        }
     elseif server_name == "yamlls" then
         settings = {
             yaml = {
-                schemas = require("schemastore").yaml.schemas({
-                    extra = {
-                        {
-                            description = "Kubernetes deployment files",
-                            url = "https://kubernetesjsonschema.dev/v1.14.0/deployment-apps-v1.json",
-                            name = "deployment.yaml",
-                            fileMatch = "deployment.yaml",
-
-                        },
-                    }
-                }),
+                schemas = {
+                    -- kubernetes = "*.yaml",
+                    -- ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+                    -- ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+                    -- ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+                    -- ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+                    -- ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+                    -- ["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+                    -- ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+                    -- ["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+                    -- ["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+                    -- ["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
+                    -- ["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
+                    -- ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+                },
                 validate = { enable = true },
             },
         }
@@ -191,6 +202,8 @@ return {
             "williamboman/mason-lspconfig.nvim",
             -- Includes JSON & YAML schemas
             "b0o/schemastore.nvim",
+            -- For Helm charts
+            "towolf/vim-helm",
         },
         config = function()
             --------------------------------
@@ -250,7 +263,7 @@ return {
         dependencies = {
             "hrsh7th/cmp-nvim-lsp", -- Enables LSP auto completion
             "hrsh7th/cmp-buffer", -- Enables buffer completions
-            "hrsh7th/cmp-path",     -- Path completions
+            "hrsh7th/cmp-path", -- Path completions
             "hrsh7th/cmp-cmdline", -- Enables cmdline completions
             "hrsh7th/cmp-nvim-lua", -- Enables nvim lua autocompletions
             "folke/neodev.nvim",
@@ -350,17 +363,13 @@ return {
         },
         config = function()
             require("mason-null-ls").setup({
-                ensure_installed = { "stylua", "prettier" },
+                ensure_installed = { "stylua" },
                 automatic_installation = false,
                 handlers = {},
             })
             require("null-ls").setup({
                 sources = {
                     -- Put anything here not supported by mason
-                    require("null-ls").builtins.formatting.prettier.with({
-                        extra_args = { "--use-tabs", "false" },
-                        -- Additional configurations here
-                    }),
                 },
             })
         end,
