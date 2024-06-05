@@ -73,3 +73,10 @@ example setting up a rust toolchain to get cargo and more:
 ```bash
 rustup default stable
 ```
+
+## Notes when setting up
+
+- If you are having trouble with the clipboard in brave or any issues in brave
+  for that matter, try manually chainging the ozone settings to Wayland as it
+  might think it is in X11. Go to chrome://flags, serach for `ozone` and change
+  `Preferred Ozone platform` to Wayland.

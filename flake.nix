@@ -26,7 +26,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      # url = "github:hyprwm/Hyprland";
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ags = {
@@ -76,6 +77,7 @@
       virt = nixSystemSetup "virt" "aarch64-linux";
       virt2 = nixSystemSetup "virt2" "x86_64-linux";
       laptop = nixSystemSetup "laptop" "x86_64-linux";
+      desktop = nixSystemSetup "desktop" "x86_64-linux";
     };
   };
 }

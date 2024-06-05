@@ -17,6 +17,8 @@
     enable = true;
   };
 
+  xdg.configFile."ags".source = ./configs/ags;
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
@@ -35,10 +37,10 @@
       source = ./configs/hypr;
       recursive = true;
     };
-    ".config/ags" = {
-      source = ./configs/ags;
-      recursive = true;
-    };
+    # ".config/ags" = {
+    #   source = ./configs/ags;
+    #   recursive = true;
+    # };
     ".config/nushell" = {
       source = ./configs/nushell;
       recursive = true;

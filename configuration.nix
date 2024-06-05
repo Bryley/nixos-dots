@@ -48,7 +48,6 @@
     jack.enable = true;
   };
   hardware.bluetooth.enable = true;
-
   # Disable the firewall for quickly opening and setting servers
   networking.firewall.enable = false;
 
