@@ -7,6 +7,8 @@
   # boot.kernelPackages = pkgs.linuxPackages_latest;  # Use the latest kernel packages
   boot.extraModulePackages = with config.boot.kernelPackages; [ rtl88x2bu ];
 
+  boot.kernelParams = [ "nvidia-drm.modeset=1" ];
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
