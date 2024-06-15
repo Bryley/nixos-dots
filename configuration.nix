@@ -9,6 +9,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Pin flake registry version
+  nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
 
   networking.networkmanager.enable = true;
 

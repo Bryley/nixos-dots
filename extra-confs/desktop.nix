@@ -21,6 +21,8 @@
     powerManagement.enable = true;
     powerManagement.finegrained = true;
 
+    forceFullCompositionPipeline = true;
+
     prime = {
       offload.enable = true;
       intelBusId = "PCI:0:2:0";
