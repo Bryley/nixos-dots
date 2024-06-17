@@ -7,6 +7,7 @@ let
     nh        # NixOS helper commands
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
+    openssl   # TLS Security stuff
     xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
     nodejs_22 # Javascript runtime & npm
