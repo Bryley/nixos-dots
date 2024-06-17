@@ -84,6 +84,10 @@ let
     # Needed for the battery service used in ASG
     services.upower.enable = true;
 
+    environment.variables = {
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    };
+
     # Nix Dynamic Linker used for somethings like Neovim Mason
     programs.nix-ld.enable = true;
     # environment.variables = {
