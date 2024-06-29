@@ -57,6 +57,7 @@ let
     flyctl    # Fly.io ctl command
     cinnamon.nemo-with-extensions # File explorer
     android-studio # Android SDK and IDE for Android Phone development
+    oh-my-git # Fun interactive game about learning git
   ];
   in {
     # Required Software #
