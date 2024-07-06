@@ -10,7 +10,6 @@ let
     unzip     # unzipping software
     openssl   # TLS Security stuff
     openssl.dev # Dev Openssl
-    openssl.pc # ? Openssl
     xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
     nodejs_22 # Javascript runtime & npm
