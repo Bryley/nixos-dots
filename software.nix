@@ -9,6 +9,7 @@ let
     gcc       # C Compiler (used by lots of software)
     unzip     # unzipping software
     openssl   # TLS Security stuff
+    openssl.dev # Dev Openssl
     xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
     nodejs_22 # Javascript runtime & npm
@@ -88,6 +89,7 @@ let
 
     environment.variables = {
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      OPENSSL_DEV=pkgs.openssl.dev;
     };
 
     # Nix Dynamic Linker used for somethings like Neovim Mason
