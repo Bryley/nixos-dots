@@ -46,6 +46,7 @@ let
     evince    # PDF viewer
     ollama    # AI LLM tool
     ngrok     # Quick servers
+    postman   # Curl GUI
 
     # TODO NTS: Make sure to get this cursor set working
     # apple-cursor # Cursor theme set apple inspired
