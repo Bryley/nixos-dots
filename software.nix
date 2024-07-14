@@ -29,6 +29,7 @@ let
     neovim    # IDE
     nushell   # Modern shell
     zellij    # Modern Terminal Multiplexer
+    distrobox # Create containers easier
 
     # System Essential GUI Applications #
     wl-clipboard # Clipboard manager for Wayland
@@ -88,7 +89,7 @@ let
     services.upower.enable = true;
 
     environment.variables = {
-      PKG_CONFIG_PATH = "${pkgs.openssl.pc}/lib/pkgconfig";
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       OPENSSL_DEV=pkgs.openssl.dev;
     };
 
