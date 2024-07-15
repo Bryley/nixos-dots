@@ -24,6 +24,7 @@ let
     just      # Replacement for Make
     fastfetch # Neofetch alternative
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
+    gnuplot_qt # Simple graphing program on terminal
 
     # Essential Full Terminal Applications #
     neovim    # IDE
