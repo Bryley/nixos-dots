@@ -31,10 +31,22 @@ return {
         end,
     },
 
+    -- {
+    --     "declancm/cinnamon.nvim",
+    --     opts = {
+    --         -- change default options here
+    --         keymaps = {
+    --             basic = true,
+    --             extra = false,
+    --         },
+    --     },
+    -- },
     {
         -- Smooth scrolling for neovim
-        "declancm/cinnamon.nvim",
-        config = true,
+        "karb94/neoscroll.nvim",
+        config = function()
+            require("neoscroll").setup({})
+        end,
     },
     {
         -- Ability to change surrounding characters on text objects.
@@ -84,7 +96,7 @@ return {
         "ojroques/nvim-bufdel",
         opts = {
             -- Custom next function to go to the last visited buffer
-            next = function ()
+            next = function()
                 local buf = vim.api.nvim_get_current_buf()
                 local jumplist = vim.fn.getjumplist()[1]
 
@@ -97,24 +109,23 @@ return {
                     if next_buf ~= buf then
                         return next_buf
                     end
-
                 end
 
                 return 0
-            end
+            end,
         },
     },
     {
         -- Better Quickfix window with previews and fuzzy file search
-        'kevinhwang91/nvim-bqf'
+        "kevinhwang91/nvim-bqf",
     },
     {
         -- Change text to snake_case, camelCase, PascalCase, kebab-case and more
-        'johmsalas/text-case.nvim',
+        "johmsalas/text-case.nvim",
         lazy = false,
-        config = function ()
-            require("textcase").setup({});
+        config = function()
+            require("textcase").setup({})
         end,
-    }
+    },
     -- TODO Terminal and Tmux integration
 }
