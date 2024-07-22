@@ -19,6 +19,7 @@ let
     sass      # Sass cli tool to convert scss files to css (for use with AGS)
     home-manager # For handling dotfiles on NixOS
     just      # Replacement for Make
+    fastfetch # Neofetch alternative
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
 
     # Essential Full Terminal Applications #
@@ -41,6 +42,8 @@ let
     libreoffice # Office Suite
     xournalpp # PDF editor
     evince    # PDF viewer
+    ollama    # AI LLM tool
+    ngrok     # Quick servers
 
     # TODO NTS: Make sure to get this cursor set working
     # apple-cursor # Cursor theme set apple inspired
@@ -71,7 +74,10 @@ let
       };
     };
 
-    virtualisation.docker.enable = true;
+    virtualisation.docker = {
+      enable = true;
+      enableNvidia = true;
+    };
 
     # Needed for the battery service used in ASG
     services.upower.enable = true;
