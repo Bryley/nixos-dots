@@ -7,6 +7,7 @@ let
     nh        # NixOS helper commands
     pkg-config # Finds packages
     gcc       # C Compiler (used by lots of software)
+    zip       # zipping software
     unzip     # unzipping software
     openssl   # TLS Security stuff
     openssl.dev # Dev Openssl
