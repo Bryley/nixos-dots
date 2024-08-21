@@ -5,8 +5,12 @@ let
   requiredSoftware = with pkgs; [
     # System Essential Terminal Applications #
     nh        # NixOS helper commands
+    pkg-config # Finds packages
     gcc       # C Compiler (used by lots of software)
+    zip       # zipping software
     unzip     # unzipping software
+    openssl   # TLS Security stuff
+    openssl.dev # Dev Openssl
     xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
     nodejs_22 # Javascript runtime & npm
@@ -21,11 +25,13 @@ let
     just      # Replacement for Make
     fastfetch # Neofetch alternative
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
+    gnuplot_qt # Simple graphing program on terminal
 
     # Essential Full Terminal Applications #
     neovim    # IDE
     nushell   # Modern shell
     zellij    # Modern Terminal Multiplexer
+    distrobox # Create containers easier
 
     # System Essential GUI Applications #
     wl-clipboard # Clipboard manager for Wayland
@@ -44,6 +50,8 @@ let
     evince    # PDF viewer
     ollama    # AI LLM tool
     ngrok     # Quick servers
+    postman   # Curl GUI
+    dbeaver-bin # Database GUI
 
     # TODO NTS: Make sure to get this cursor set working
     # apple-cursor # Cursor theme set apple inspired
@@ -55,6 +63,7 @@ let
     flyctl    # Fly.io ctl command
     cinnamon.nemo-with-extensions # File explorer
     android-studio # Android SDK and IDE for Android Phone development
+    oh-my-git # Fun interactive game about learning git
   ];
   in {
     # Required Software #
@@ -81,6 +90,11 @@ let
 
     # Needed for the battery service used in ASG
     services.upower.enable = true;
+
+    environment.variables = {
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      OPENSSL_DEV=pkgs.openssl.dev;
+    };
 
     # Nix Dynamic Linker used for somethings like Neovim Mason
     programs.nix-ld.enable = true;
