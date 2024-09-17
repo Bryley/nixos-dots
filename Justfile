@@ -28,6 +28,9 @@ pull:
 	git checkout local-changes
 	git rebase origin/main
 
+gc:
+	nix-store --gc
+	nix-collect-gatbage -d
 
 # rebuild:
 #     bash ./rebuild.sh

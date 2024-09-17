@@ -188,6 +188,18 @@ alias f = cd (fd --hidden --type directory --exclude node_modules --exclude .git
 # Activates a python virtualenv
 alias activate = overlay use ./.venv/bin/activate.nu
 
+# Sets up nix develop command to automatically alias to `nix develop --command nu`
+# TODO fix this so you can use options with it
+# def nix [ ...args ] {
+#     if ( ($args | first 1 | to text | str trim) == "develop" ) {
+#         # If the first argument is 'develop', modify the command
+#         ^nix develop --command nu ($args | skip 1)
+#     } else {
+#         # For all other commands, pass the arguments as-is
+#         ^nix $args
+#     }
+# }
+
 # Opens current git repo's webpage
 def gitopen [] {
     let url = (git remote get-url origin)
@@ -197,13 +209,11 @@ def gitopen [] {
     start $url
 }
 
-# This is aliasing nvim so that Mason will work with nixos
-# TODO: Disabled for now, think about enabling nix ld system wide instead of just Nvim
-# alias _nvim = nvim
-#
+$env.FZF_DEFAULT_OPTS = "--layout=reverse --height=40%"
+
 let nixld = (if (echo "/etc/NIXOS" | path exists) {
     # If on NixOS then set up the nix_ld dynamic linker (note it needs to be installed)
-    (nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
+    (^nix eval --impure --raw --expr 'let pkgs = import <nixpkgs> {}; NIX_LD = pkgs.lib.fileContents "${pkgs.stdenv.cc}/nix-support/dynamic-linker"; in NIX_LD')
 } else {
     ""
 })

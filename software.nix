@@ -1,5 +1,5 @@
 
-{ config, lib, pkgs, inputs, user, ... }:
+{ config, lib, pkgs, inputs, system, user, ... }:
 
 let
   requiredSoftware = with pkgs; [
@@ -13,8 +13,8 @@ let
     openssl.dev # Dev Openssl
     xdg-utils # XDG utils for setting and managing default applications
     wget      # curl alternative
-    nodejs_22 # Javascript runtime & npm
-    rustup    # Everything for Rust (cargo, rustc)
+    nodePackages_latest.nodejs # Javascript runtime and npm
+    # rustup    # Everything for Rust (cargo, rustc)
     ripgrep   # Super fast searching in files
     fd        # Better `find` command
     fzf       # Fuzzy finder
@@ -25,7 +25,16 @@ let
     just      # Replacement for Make
     fastfetch # Neofetch alternative
     (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
-    gnuplot_qt # Simple graphing program on terminal
+    pkg-config # Finds packages
+    openssl   # Used as a dep for a lot of projects
+    (python310.withPackages(ps: with ps; [ rich virtualenv pyyaml ])) # Python 3.10
+    ollama    # LLMs
+    elmPackages.elm # ELM programming language
+    bat       # Better cat
+    hurl      # CLI tool and file format for API testing
+    jq        # JSON parser CLI tool
+    nodePackages.prettier # Javascript formatter (required for neovim)
+    nvidia-container-toolkit # Let nvidia work with docker containers
 
     # Essential Full Terminal Applications #
     neovim    # IDE
@@ -42,8 +51,7 @@ let
     wofi      # App launcher
     lxqt.lxqt-policykit # Polkit Authentication Agent
     firefox   # Web Browser
-    brave     # Web Browser
-    wofi      # App Launcher
+    inputs.zen-browser.packages."${system}".specific
     google-chrome # Chrome browser for webdev testing
     libreoffice # Office Suite
     xournalpp # PDF editor
@@ -62,8 +70,6 @@ let
     cargo-leptos # Leptos Tools
     flyctl    # Fly.io ctl command
     cinnamon.nemo-with-extensions # File explorer
-    android-studio # Android SDK and IDE for Android Phone development
-    oh-my-git # Fun interactive game about learning git
   ];
   in {
     # Required Software #
@@ -83,6 +89,10 @@ let
       };
     };
 
+    environment.variables = {
+      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+    };
+
     virtualisation.docker = {
       enable = true;
       enableNvidia = true;
@@ -92,7 +102,7 @@ let
     services.upower.enable = true;
 
     environment.variables = {
-      PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+      # PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
       OPENSSL_DEV=pkgs.openssl.dev;
     };
 
@@ -104,7 +114,6 @@ let
 
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     };
 
     # Optional software groups #

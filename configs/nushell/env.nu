@@ -26,13 +26,16 @@ def create_left_prompt [] {
         $dir = ($dir | path split | last 3 | prepend "..." | path join)
     }
 
+    let nix_color = (ansi cyan)
     let path_color = (if (is-admin) { ansi red_bold } else { ansi blue_bold })
     let separator_color = (if (is-admin) { ansi light_red_bold } else { ansi light_blue_bold })
     let path_segment = $" ($path_color)($dir)"
 
     $path_segment | str replace --all (char path_sep) $"($separator_color)(char path_sep)($path_color)"
 
-    $"($path_segment)(get_git_info)"
+    let nixshell = if ($env.IN_NIX_SHELL? | is-empty) {""} else {$"($nix_color)󱄅 "}
+
+    $"($nixshell)($path_segment)(get_git_info)"
 }
 
 def get_git_info [] {

@@ -39,7 +39,6 @@
   i18n.defaultLocale = "en_AU.UTF-8";
 
   # Enable sound.
-  sound.enable = true;
   services.pipewire = {
     enable = true;
     alsa = {

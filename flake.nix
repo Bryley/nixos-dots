@@ -15,6 +15,7 @@
   # - [ ] Plymouth
   # - [ ] Setup script for new system
   # - [X] kitty config
+  # - [ ] disko for file system setup
   # - [ ] Automatically apply .gitmessage as the git template using nix
 
   description = "Bryley's NixOS configuration";
@@ -29,18 +30,17 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      # url = "github:hyprwm/Hyprland";
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ags = {
       url = "github:Aylur/ags";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    zen-browser = {
+      url = "github:MarceColl/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     homeConfigurations."bryley" = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs { system = "x86_64-linux"; };
       extraSpecialArgs = { inherit inputs; };
@@ -65,7 +65,7 @@
             ];
           };
         };
-        specialArgs = { user = "bryley"; inherit inputs; };
+        specialArgs = { user = "bryley"; inherit inputs; inherit system; };
         modules = [
           ./hardware-confs/${name}.nix
           ({ ... }: {

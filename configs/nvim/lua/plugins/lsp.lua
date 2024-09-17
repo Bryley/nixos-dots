@@ -4,6 +4,7 @@ local enabled = true
 local function server_setup(lspconfig, capabilities, server_name)
     -- Check the language and change settings for each
     local settings = nil
+    local init_options = nil
     local filetypes = lspconfig[server_name].document_config.default_config.filetypes
     local on_attach = function(client, bufnr)
         if client.server_capabilities.documentSymbolProvider then
@@ -136,6 +137,47 @@ local function server_setup(lspconfig, capabilities, server_name)
                 },
             },
         }
+    elseif server_name == "tailwindcss" then
+        -- Get tailwindcss lsp to work with elm files
+        filetypes = { "html", "elm", "jsx", "tsx" }
+        init_options = {
+            userLanguages = {
+                elm = "html",
+                html = "html",
+            },
+        }
+        settings = {
+            tailwindCSS = {
+                includeLanguages = {
+                    elm = "html",
+                    html = "html",
+                },
+                classAttributes = { "class", "className", "classList", "ngClass" },
+                experimental = {
+                    classRegex = {
+                        -- TODO try and get multiline strings working
+                        '\\bclass[\\s(<|]+"([^"]*)"',
+                        '\\bclass[\\s(]+"[^"]*"[\\s+]+"([^"]*)"',
+                        '\\bclass[\\s<|]+"[^"]*"\\s*\\+{2}\\s*" ([^"]*)"',
+                        '\\bclass[\\s<|]+"[^"]*"\\s*\\+{2}\\s*" [^"]*"\\s*\\+{2}\\s*" ([^"]*)"',
+                        '\\bclass[\\s<|]+"[^"]*"\\s*\\+{2}\\s*" [^"]*"\\s*\\+{2}\\s*" [^"]*"\\s*\\+{2}\\s*" ([^"]*)"',
+                        '\\bclassList[\\s\\[\\(]+"([^"]*)"',
+                        '\\bclassList[\\s\\[\\(]+"[^"]*",\\s[^\\)]+\\)[\\s\\[\\(,]+"([^"]*)"',
+                        '\\bclassList[\\s\\[\\(]+"[^"]*",\\s[^\\)]+\\)[\\s\\[\\(,]+"[^"]*",\\s[^\\)]+\\)[\\s\\[\\(,]+"([^"]*)"',
+                    },
+                },
+                lint = {
+                    cssConflict = "warning",
+                    invalidApply = "error",
+                    invalidConfigPath = "error",
+                    invalidScreen = "error",
+                    invalidTailwindDirective = "error",
+                    invalidVariant = "error",
+                    recommendedVariantOrder = "warning",
+                },
+                validate = true,
+            },
+        }
     elseif server_name == "yamlls" then
         settings = {
             yaml = {
@@ -155,7 +197,7 @@ local function server_setup(lspconfig, capabilities, server_name)
                     -- ["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
                 },
                 validate = { enable = true },
-            },
+            }
         }
     end
 
@@ -163,6 +205,7 @@ local function server_setup(lspconfig, capabilities, server_name)
         capabilities = capabilities,
         on_attach = on_attach,
         settings = settings,
+        init_options = init_options,
         filetypes = filetypes,
     })
 end
@@ -349,7 +392,7 @@ return {
         },
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "rust_analyzer", "pyright", "jsonls" },
+                ensure_installed = { "lua_ls", "pyright", "jsonls" },
             })
         end,
     },
@@ -444,6 +487,49 @@ return {
         opts = {
             lsp = { auto_attach = true },
         },
+    },
+    {
+        -- Not an LSP but a plugin for interacting with hurl files
+        "jellydn/hurl.nvim",
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "nvim-lua/plenary.nvim",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        ft = "hurl",
+        opts = {
+            -- Show debugging info
+            debug = false,
+            -- Show notification on run
+            show_notification = false,
+            -- Show response in popup or split
+            mode = "split",
+            -- Default formatter
+            formatters = {
+                json = { "jq" }, -- Make sure you have install jq in your system, e.g: brew install jq
+                html = {
+                    "prettier", -- Make sure you have install prettier in your system, e.g: npm install -g prettier
+                    "--parser",
+                    "html",
+                },
+            },
+            -- Default mappings for the response popup or split views
+            mappings = {
+                close = "q", -- Close the response popup or split view
+                next_panel = "<C-n>", -- Move to the next response popup window
+                prev_panel = "<C-p>", -- Move to the previous response popup window
+            },
+        },
+        -- keys = {
+        --     -- Run API request
+        --     { "<leader>A", "<cmd>HurlRunner<CR>", desc = "Run All requests" },
+        --     { "<leader>a", "<cmd>HurlRunnerAt<CR>", desc = "Run Api request" },
+        --     { "<leader>te", "<cmd>HurlRunnerToEntry<CR>", desc = "Run Api request to entry" },
+        --     { "<leader>tm", "<cmd>HurlToggleMode<CR>", desc = "Hurl Toggle Mode" },
+        --     { "<leader>tv", "<cmd>HurlVerbose<CR>", desc = "Run Api in verbose mode" },
+        --     -- Run Hurl request in visual mode
+        --     { "<leader>h", ":HurlRunner<CR>", desc = "Hurl Runner", mode = "v" },
+        -- },
     },
 }
 
